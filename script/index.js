@@ -2,6 +2,14 @@
 let cuentaTotal = 0
 let masajes = ""
 let cantidadTratamientos = 0
+let msjDescontracturante = "Masajes descontracturantes"
+let precioDescontracturante = 2500
+let msjRelajante = "Masajes relajantes"
+let precioRelajante = 2000
+let vacum = "Vacum"
+let precioVacum = 1500
+let limpiezaFacial = "Limpieza facial"
+let precioLimpiezaFacial = 1000
 
 function preguntaOtroTratamiento() {
     let n = prompt(`¿Te gustaría agregar otro tratamiento?
@@ -21,7 +29,18 @@ function preguntaOtroTratamiento() {
     }
 }
 
-function otraconsulta() {
+function alertaCase (tipoMasaje, precioMasaje) {
+            masajes = masajes + `- ${tipoMasaje} \n`
+            cantidadTratamientos++
+            cuentaTotal += precioMasaje
+            alert(`${tipoMasaje}:
+                - Costo: $${precioMasaje}
+    
+                - Cantidad de tratamientos: ${cantidadTratamientos}
+                - Subtotal: ${cuentaTotal}`)
+}
+
+function otraConsulta() {
     cuentaTotal = 0
     cantidadTratamientos = 0
     let consulta = prompt(`Dejanos aquí tu consulta:`)
@@ -33,6 +52,54 @@ function otraconsulta() {
     ${consulta}`)
 }
 
+function agregarTratamiento() {
+    let tratamiento = prompt(`¿Que tratamiento te gustaría realizar? 
+    (ingrese el número correspondiente)
+        [1] ${msjDescontracturante}
+        [2] ${msjRelajante}
+        [3] ${vacum}
+        [4] ${limpiezaFacial}
+        [5] Otro tipo de consulta (borrará los tratamientos previos que hayas elegido)
+        [6] No necesito nada más`)
+
+    switch (tratamiento) {
+        case "1":
+            alertaCase(msjDescontracturante, precioDescontracturante)
+            preguntaOtroTratamiento()
+
+            break;
+        case "2":
+            alertaCase(msjRelajante, precioRelajante)
+            preguntaOtroTratamiento()
+
+            break;
+        case "3":
+            alertaCase(vacum, precioVacum)
+            preguntaOtroTratamiento()
+
+            break;
+        case "4":
+            alertaCase(limpiezaFacial, precioLimpiezaFacial)
+            preguntaOtroTratamiento()
+
+            break;
+        case "5": otraConsulta()
+
+            break;
+        case "6":
+            if (cantidadTratamientos == 0) {
+                alert("Gracias por visitar Galatea-Skin")
+            }
+            break;
+
+        default:
+            alert("Ingrese un número correcto")
+            agregarTratamiento()
+            break;
+    }
+}
+
+//MAIN//
 const nombre = prompt(`Bienvenido a Galatea-Skin, vamos a guiarte en tu proceso de reserva y pago de turno.
         -¿Cómo es tu nombre?`).toUpperCase()
 
@@ -42,92 +109,24 @@ if (nombre != "") {
     alert("Gracias por visitar Galatea-Skin")
 }
 
-function agregarTratamiento() {
-    let tratamiento = prompt(`¿Que tratamiento te gustaría realizar? 
-    (ingrese el número correspondiente)
-        [1] Masajes descontracturantes
-        [2] Masajes relajantes
-        [3] Vacum
-        [4] Limpieza facial
-        [5] Otro tipo de consulta (borrará los tratamientos previos que hayas elegido)
-        [6] No necesito nada más`)
-
-    switch (tratamiento) {
-        case "1":
-            masajes = masajes + "- Masajes descontracturantes \n"
-            cantidadTratamientos++
-            cuentaTotal += 2500
-            alert(`Masajes descontracturantes:
-                - Costo: $2500
-    
-                - Total tratamientos: ${cantidadTratamientos}
-                - Subtotal: ${cuentaTotal}`)
-
-                
-            preguntaOtroTratamiento()
-
-            break;
-        case "2":
-            masajes = masajes + "- Masajes relajantes \n"
-            cantidadTratamientos++
-            cuentaTotal += 2000
-            alert(`Masajes relajantes:
-                - Costo: $2000
-    
-                - Total tratamientos: ${cantidadTratamientos}
-                - Subtotal: ${cuentaTotal}`)
-
-            preguntaOtroTratamiento()
-
-            break;
-        case "3":
-            masajes = masajes + "- Vacum \n"
-            cantidadTratamientos++
-            cuentaTotal += 2500
-            alert(`Vacum:
-                - Costo: $2500
-    
-                - Total tratamientos: ${cantidadTratamientos}
-                - Subtotal: ${cuentaTotal}`)
-
-            preguntaOtroTratamiento()
-
-            break;
-        case "4":
-            masajes = masajes + "- Limpieza facial \n"
-            cantidadTratamientos++
-            cuentaTotal += 2500
-            alert(`Limpieza facial:
-                - Costo: $2500
-    
-                - Total tratamientos: ${cantidadTratamientos}
-                - Subtotal: ${cuentaTotal}`)
-
-            preguntaOtroTratamiento()
-
-            break;
-        case "5": otraconsulta()
-
-            break;
-        case "6":
-            if (cantidadTratamientos == 0) {
-                alert("Gracias por visitar Galatea-Skin")
-            }
-            break;
-
-        default: console.log("poné bien el numero pajín")
-            alert("Ingrese un número correcto")
-            agregarTratamiento()
-            break;
-    }
-}
-
-
 if (cantidadTratamientos != 0) {
     alert(`${nombre}, has elegido los siguientes tratamientos:
 
 ${masajes}
 Cantidad de tratamientos: ${cantidadTratamientos}
 El total es: $${cuentaTotal}`)
-    reservaTurno()
+    reservaTurno(cantidadTratamientos)
 }
+
+function reservaTurno (cantidad) {
+    let dia = 0
+    let mes = 0
+    let mensajeTurnos = ""
+    for (let i = 1; i <= cantidad; i++) {
+        dia = prompt (`Ingresa el DIA para el tratamiento N°${[i]}: [1-31]`)
+        mes = prompt (`Ingresa el MES para el tratamiento N°${[i]}: [1-12]`)
+        mensajeTurnos = mensajeTurnos + `El tratamiento N° ${i}  sera el día ${dia} del ${mes} \n`
+    }
+    alert(mensajeTurnos)
+}
+
