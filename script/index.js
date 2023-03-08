@@ -10,15 +10,17 @@ let vacum = "Vacum"
 let precioVacum = 1500
 let limpiezaFacial = "Limpieza facial"
 let precioLimpiezaFacial = 1000
+let mensajeTratamientos = ""
+let mensajeTurnos = ""
 
 function preguntaOtroTratamiento() {
     let n = prompt(`¿Te gustaría agregar otro tratamiento?
-                [1] SI
-                [2] NO`)
+    [1] SI
+    [2] NO`)
     while (n !== "1" && n !== "2") {
         n = prompt(`La opción elegida no es correcta. ¿Te gustaría agregar otro tratamiento?
-                [1] SI
-                [2] NO`)
+        [1] SI
+        [2] NO`)
     }
     if (n == "1") {
         agregarTratamiento();
@@ -30,14 +32,14 @@ function preguntaOtroTratamiento() {
 }
 
 function alertaCase (tipoMasaje, precioMasaje) {
-            masajes = masajes + `- ${tipoMasaje} \n`
-            cantidadTratamientos++
-            cuentaTotal += precioMasaje
-            alert(`${tipoMasaje}:
-                - Costo: $${precioMasaje}
+    masajes = masajes + `- ${tipoMasaje} \n`
+    cantidadTratamientos++
+    cuentaTotal += precioMasaje
+    alert(`${tipoMasaje}:
+    - Costo: $${precioMasaje}
     
-                - Cantidad de tratamientos: ${cantidadTratamientos}
-                - Subtotal: ${cuentaTotal}`)
+    - Cantidad de tratamientos: ${cantidadTratamientos}
+    - Subtotal: ${cuentaTotal}`)
 }
 
 function otraConsulta() {
@@ -45,7 +47,7 @@ function otraConsulta() {
     cantidadTratamientos = 0
     let consulta = prompt(`Dejanos aquí tu consulta:`)
     let telOtraConsulta = prompt(`Ingresá tu número de teléfono:`)
-
+    
     alert(`Muchas gracias ${nombre}.
     Nos comunicaremos en breve contigo al siguiente número: ${telOtraConsulta}.
     Por la consulta:
@@ -88,7 +90,7 @@ function agregarTratamiento() {
             break;
         case "6":
             if (cantidadTratamientos == 0) {
-                alert("Gracias por visitar Galatea-Skin")
+                alert(`Gracias ${nombre} por visitar Galatea-Skin, esperamos para la próxima puedas elegirnos.`)
             }
             break;
 
@@ -96,7 +98,28 @@ function agregarTratamiento() {
             alert("Ingrese un número correcto")
             agregarTratamiento()
             break;
+        }
+}
+
+function reservaTurno(cantidad) {
+    let dia = 0
+    let mes = 0
+
+    for (let i = 1; i <= cantidad; i++) {
+        do {
+            let input = prompt(`Ingrese el DIA para el tratamiento ${[i]}`)
+            dia = parseInt(input);
+        } while (isNaN(dia) || !(dia >= 1 && dia <= 31));
+
+        do {
+            let input = prompt(`DIA elegido: ${dia} \n Ingrese el MES para el tratamiento ${[i]}`)
+            mes = parseInt(input);
+        } while (isNaN(mes) || !(mes >= 1 && mes <= 12));
+
+        mensajeTurnos = mensajeTurnos + `El tratamiento N° ${i} sera el día ${dia} del ${mes}\n`
+
     }
+    return alert(mensajeTurnos)
 }
 
 //MAIN//
@@ -110,23 +133,14 @@ if (nombre != "") {
 }
 
 if (cantidadTratamientos != 0) {
-    alert(`${nombre}, has elegido los siguientes tratamientos:
-
-${masajes}
-Cantidad de tratamientos: ${cantidadTratamientos}
-El total es: $${cuentaTotal}`)
+    mensajeTratamientos = `${nombre}, has elegido los siguientes tratamientos: \n${masajes} \n Cantidad de tratamientos: ${cantidadTratamientos} \n El total es: $${cuentaTotal}`
+    alert(mensajeTratamientos)
     reservaTurno(cantidadTratamientos)
 }
 
-function reservaTurno (cantidad) {
-    let dia = 0
-    let mes = 0
-    let mensajeTurnos = ""
-    for (let i = 1; i <= cantidad; i++) {
-        dia = prompt (`Ingresa el DIA para el tratamiento N°${[i]}: [1-31]`)
-        mes = prompt (`Ingresa el MES para el tratamiento N°${[i]}: [1-12]`)
-        mensajeTurnos = mensajeTurnos + `El tratamiento N° ${i}  sera el día ${dia} del ${mes} \n`
-    }
-    alert(mensajeTurnos)
+if (cantidadTratamientos != 0){
+alert(`${mensajeTratamientos} \n \n ${mensajeTurnos} \n \n Agradecemos tu consulta y te esperamos para que disfrutes de nuestro trabajo`)
 }
+
+
 
