@@ -104,26 +104,38 @@ function agregarTratamiento() {
 function reservaTurno(cantidad) {
     let dia = 0
     let mes = 0
+    let hora = 0
 
     for (let i = 1; i <= cantidad; i++) {
         do {
-            let input = prompt(`Ingrese el DIA para el tratamiento ${[i]}`)
+            let input = prompt(`Ingrese el DIA del mes para el tratamiento ${[i]} \n [1 - 31]`)
             dia = parseInt(input);
         } while (isNaN(dia) || !(dia >= 1 && dia <= 31));
 
         do {
-            let input = prompt(`DIA elegido: ${dia} \n Ingrese el MES para el tratamiento ${[i]}`)
+            let input = prompt(`DIA elegido: ${dia} \n Ingrese el MES para el tratamiento ${[i]}
+            [1] - ENERO             [7] - JULIO
+            [2] - FEBRERO          [8] - AGOSTO
+            [3] - MARZO            [9] - SEPTIEMBRE
+            [4] - ABRIL               [10] - OCTUBRE
+            [5] - MAYO              [11] - NOVIEMBRE
+            [6] - JUNIO              [12] - DICIEMBRE `)
             mes = parseInt(input);
         } while (isNaN(mes) || !(mes >= 1 && mes <= 12));
 
-        mensajeTurnos = mensajeTurnos + `El tratamiento N° ${i} sera el día ${dia} del ${mes}\n`
+        do {
+            let input = prompt(`FECHA: ${dia}/${mes} \n Ingrese la HORA para el tratamiento ${[i]} \n
+            [Trabajamos de 9 a 17 horas]`)
+            hora = parseInt(input);
+        } while (isNaN(hora) || !(hora >= 9 && hora <= 17));
 
+        mensajeTurnos = mensajeTurnos + `El tratamiento N° ${i} sera el día ${dia} / ${mes} a las ${hora}hs. \n`
     }
-    return alert(mensajeTurnos)
+    alert(mensajeTurnos)
 }
 
 //MAIN//
-const nombre = prompt(`Bienvenido a Galatea-Skin, vamos a guiarte en tu proceso de reserva y pago de turno.
+const nombre = prompt(`Bienvenido a Galatea-Skin, vamos a guiarte en tu proceso de reserva de turno.
         -¿Cómo es tu nombre?`).toUpperCase()
 
 if (nombre != "") {
@@ -141,6 +153,3 @@ if (cantidadTratamientos != 0) {
 if (cantidadTratamientos != 0){
 alert(`${mensajeTratamientos} \n \n ${mensajeTurnos} \n \n Agradecemos tu consulta y te esperamos para que disfrutes de nuestro trabajo`)
 }
-
-
-
