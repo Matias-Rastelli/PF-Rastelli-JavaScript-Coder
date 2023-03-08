@@ -46,10 +46,10 @@ function otraConsulta() {
     cuentaTotal = 0
     cantidadTratamientos = 0
     let consulta = prompt(`Dejanos aquí tu consulta:`)
-    let telOtraConsulta = prompt(`Ingresá tu número de teléfono:`)
+    let contactoOtraConsulta = prompt(`Ingresá tu email o telefono:`)
     
     alert(`Muchas gracias ${nombre}.
-    Nos comunicaremos en breve contigo al siguiente número: ${telOtraConsulta}.
+    Nos comunicaremos en breve contigo a: ${contactoOtraConsulta}.
     Por la consulta:
     ${consulta}`)
 }
@@ -61,6 +61,7 @@ function agregarTratamiento() {
         [2] ${msjRelajante}
         [3] ${vacum}
         [4] ${limpiezaFacial}
+
         [5] Otro tipo de consulta (borrará los tratamientos previos que hayas elegido)
         [6] No necesito nada más`)
 
@@ -151,5 +152,5 @@ if (cantidadTratamientos != 0) {
 }
 
 if (cantidadTratamientos != 0){
-alert(`${mensajeTratamientos} \n \n ${mensajeTurnos} \n \n Agradecemos tu consulta y te esperamos para que disfrutes de nuestro trabajo`)
+alert(`${mensajeTratamientos} \n \n ${mensajeTurnos} \n \n Agradecemos tu consulta y te esperamos para que disfrutes de nuestro trabajo.`)
 }
