@@ -1,19 +1,13 @@
-// simulador de pago y entrega de turnos de estetica //
-const carrito = { cuentaTotal: 0, masajes: [] }
+// simulador de pago y reserva de turnos de estetica //
+const carrito = {cuentaTotal: 0, masajes: [], mensajeTratamientos:"" , mensajeTurnos:"" }
 const tratamientos = []
-let mensajeTratamientos = ""
-let mensajeTurnos = ""
 
 class Tratamientos {
     constructor(nombre, precio) {
         this.nombre = nombre
         this.precio = parseFloat(precio)
         this.id = tratamientos.length + 1
-        this.reserva = {
-            dia: Number,
-            mes: Number,
-            hora: Number
-        }
+        this.fecha = new Date()
     }
 
     pushearTratamiento() {
@@ -25,6 +19,17 @@ class Tratamientos {
     }
     cambiarNombre(nuevoNombre) {
         this.nombre = nuevoNombre
+    }
+
+    cambiarFecha(fechaIngresada){
+        const nuevaFecha = fechaIngresada
+        this.fecha.setFullYear(nuevaFecha.getFullYear())
+        this.fecha.setMonth(nuevaFecha.getMonth())
+        this.fecha.setDate(nuevaFecha.getDate())
+        this.fecha.setHours(nuevaFecha.getHours())
+        this.fecha.setMinutes(0)
+        this.fecha.setSeconds(0)
+        this.fecha.setMilliseconds(0)
     }
 }
 
@@ -42,21 +47,54 @@ function crearTratamientosDesdeArray(arrayTratamientos) {
     });
 }
 
+function menuPrincipal() {
+    let opcionMenuPrincipal = prompt(`Bienvenido ${nombre}, ¿Cómo podemos ayudarte?
+    (ingrese el número correspondiente)
+
+        [1] Reservar tratamientos
+        [2] Otro tipo de consulta (elimina reservas)
+        [3] Funciones de administrador
+
+        [4] Salir`)
+
+    switch (opcionMenuPrincipal) {
+        case "1":
+            reservaTratamientos()
+
+            break;
+        case "2":
+            otraConsulta()
+
+            break;
+        case "3":
+            loginAdministrador()
+
+            break;
+        case "4":
+            if (carrito.masajes.length == 0) {
+                alert(`Gracias ${nombre} por visitar Galatea-Skin, esperamos para la próxima puedas elegirnos.`)
+            }
+            break;
+        default:
+            menuPrincipal()
+            break;
+    }
+}
+
 function loginAdministrador() {
     let pass = ""
     let i = 0
     do {
-        pass = prompt(`Bienvenido Administrador ${nombre} ingresa tu contraseña:`)
+        pass = prompt(`Bienvenido Administrador ${nombre} ingresá tu contraseña: (pass: admin)`)
         i++
         console.log(i)
     } while (pass !== "admin" && i <= 2);
 
     if (i >= 2) {
         alert(`Lo siento ${nombre} la contraseña es incorrecta y excediste los intentos.`)
-        agregarTratamiento()
+        menuPrincipal()
     } else { opcionesAdministrador() }
 }
-
 
 function opcionesAdministrador() {
 
@@ -76,29 +114,25 @@ function opcionesAdministrador() {
         [1] Cambiar precio a un tratamiento
         [2] Cambiar nombre a un tratamiento
         [3] Crear nuevo tratamiento
+        [4] Eliminar un tratamiento
 
-        [4] Volver atras`)
+        [5] Volver atras`)
 
     if (imput == 1) {
         let id = parseInt(prompt(`¿A que tratamiento le cambiamos el PRECIO? 
-        (ingrese el número correspondiente)\n
-${tratamientosAdministrarConcat} `))
+        (ingrese el número correspondiente)\n${tratamientosAdministrarConcat} `))
 
         if (id < 1 || id > tratamientos.length || isNaN(id)) {
             alert("El tratamiento no existe o el valor ingresado es incorrecto")
             opcionesAdministrador()
         } else {
-            let imput = prompt(`Ingrese el nuevo precio para el tratamiento \n
-        ${tratamientos[id - 1].id} - ${tratamientos[id - 1].nombre} \n
+            let imput = prompt(`Ingrese el nuevo precio para el tratamiento \n${tratamientos[id - 1].id} - ${tratamientos[id - 1].nombre}\n
         Precio actual: ${tratamientos[id - 1].precio} `)
             tratamientos[id - 1].cambiarPrecio(imput)
             alertaAdministrador(id, "modificado")
         }
-
     } else if (imput == 2) {
-        let id = prompt(`¿A que tratamiento le cambiamos el NOMBRE? 
-                        (ingrese el número correspondiente)
-${tratamientosAdministrarConcat}`)
+        let id = prompt(`¿A que tratamiento le cambiamos el NOMBRE?\n(ingrese el número correspondiente)\n${tratamientosAdministrarConcat}`)
 
         if (id < 1 || id > tratamientos.length || isNaN(id)) {
             alert("El tratamiento no existe o el valor ingresado es incorrecto")
@@ -109,51 +143,31 @@ ${tratamientosAdministrarConcat}`)
             tratamientos[id - 1].cambiarNombre(imput)
             alertaAdministrador(id, "modificado")
         }
-
     } else if (imput == 3) {
         crearNuevoTratamiento(prompt("Ingrese el nombre del nuevo tratamiento: [ej: Masajes de piernas] "), prompt("Ingrese el precio del nuevo tratamiento [ej: 1000] "))
         alertaAdministrador(tratamientos.length, "agregado")
-    } else if (imput == 4) {
-        agregarTratamiento()
-    } else {
-        alert(`${nombre} sos un pelotudo, pone una opcion correcta`)
+
+/*Hay un error al eliminar tratamientos, y es que use el length del array para obtener sus indices,
+y al eliminarlos en el resto de menus no obtiene bien sus id respecto a lo que muestra el alert porq use array.length para determinarlos.
+decidi dejarlo igual para que vean el uso de splice pero sepan que despues de usarlo el resto del codigo no tiene un correcto funcionamiento*/
+    } else if (imput == 4) { 
+        alert("Esta función rompe el resto de menus, explicacion en codigo linea 131")
+        let idTratamientoARemover = prompt(`¿Qué tratamiento te gustaria eliminar?\n(ingrese el número correspondiente)\n${tratamientosAdministrarConcat}`)
+        const tratamientoEliminado = tratamientos.splice(idTratamientoARemover, 1)
+        console.log(tratamientoEliminado)
+        alert(`El tratamiento:\nID: ${tratamientoEliminado[0].id}\nNombre: ${tratamientoEliminado[0].nombre}\nPrecio: ${tratamientoEliminado[0].precio}\nFue eliminado correctamente`)
         opcionesAdministrador()
+    } else if(imput == 5) {
+        menuPrincipal()
+    } else {
+        alert(`${nombre} La opción ingresada no existe`)
+        opcionesAdministrador()        
     }
 }
 
 function crearNuevoTratamiento(nombre, precio) {
     const newTratamiento = new Tratamientos(nombre, precio)
     newTratamiento.pushearTratamiento()
-}
-
-function preguntaOtroTratamiento() {
-    let n = prompt(`¿Te gustaría agregar otro tratamiento?
-    [1] SI
-    [2] NO`)
-    while (n !== "1" && n !== "2") {
-        n = prompt(`La opción elegida no es correcta. ¿Te gustaría agregar otro tratamiento?
-        [1] SI
-        [2] NO`)
-    }
-    if (n == "1") {
-        agregarTratamiento();
-    } else if (n == "2") {
-        alert(`Muchas gracias, a continuación tus elecciones...`)
-    } else {
-        alert(`La opción elegida no es correcta`)
-    }
-}
-
-function alertaCase(tratamiento) {
-
-    carrito.masajes.push(tratamiento)
-    carrito.cuentaTotal += tratamiento.precio
-
-    alert(`${tratamiento.nombre}:
-    - Costo: $${tratamiento.precio}
-    
-    - Cantidad de tratamientos: ${carrito.masajes.length}
-    - Subtotal: $${carrito.cuentaTotal}`)
 }
 
 function otraConsulta() {
@@ -168,61 +182,58 @@ function otraConsulta() {
     ${consulta}`)
 }
 
-function agregarTratamiento() {
-    let tratamiento = prompt(`¿Que tratamiento te gustaría realizar? 
-    (ingrese el número correspondiente)
-        [${tratamientos[0].id}] ${tratamientos[0].nombre}
-        [${tratamientos[1].id}] ${tratamientos[1].nombre}
-        [${tratamientos[2].id}] ${tratamientos[2].nombre}
-        [${tratamientos[3].id}] ${tratamientos[3].nombre}
+function reservaTratamientos() {
+    const tratamientosAdministrar = tratamientos.map(tratamiento => `[${tratamiento.id}] - ${tratamiento.nombre} - $${tratamiento.precio}`)
+    const tratamientosAdministrarConcat = tratamientosAdministrar.join("\n")
 
-        [5] Otro tipo de consulta (borrará los tratamientos previos que hayas elegido)
-        [6] No necesito nada más
-        [7] Funciones de administrador`)
+    let imput = prompt(`¿Que tratamiento te gustaría realizar?\n(ingrese el número correspondiente)\n${tratamientosAdministrarConcat}\n\n[${tratamientosAdministrar.length + 1}] - Volver atras `)
+    let eleccion = parseInt(tratamientos.findIndex((tratamiento) => tratamiento.id == imput))
 
-    switch (tratamiento) {
-        case "1":
-            alertaCase(tratamientos[0])
-            preguntaOtroTratamiento()
-
-            break;
-        case "2":
-            alertaCase(tratamientos[1])
-            preguntaOtroTratamiento()
-
-            break;
-        case "3":
-            alertaCase(tratamientos[2])
-            preguntaOtroTratamiento()
-
-            break;
-        case "4":
-            alertaCase(tratamientos[3])
-            preguntaOtroTratamiento()
-
-            break;
-        case "5": otraConsulta()
-
-            break;
-        case "6":
-            if (carrito.masajes.length == 0) {
-                alert(`Gracias ${nombre} por visitar Galatea-Skin, esperamos para la próxima puedas elegirnos.`)
-            }
-            break;
-
-        case "7":
-            loginAdministrador()
-            break;
-
-        default:
+    if (imput == tratamientosAdministrar.length + 1) {
+        menuPrincipal()
+    } else {
+        if (eleccion == -1) {
             alert("Ingrese un número correcto")
-            agregarTratamiento()
-            break;
+            reservaTratamientos()
+        } else {
+            alertaTratamientos(tratamientos[eleccion])
+            preguntaOtroTratamiento()
+            }
+    }
+}
+
+function alertaTratamientos(tratamiento) {
+
+    carrito.masajes.push(tratamiento)
+    carrito.cuentaTotal += tratamiento.precio
+
+    alert(`${tratamiento.nombre}:
+    - Costo: $${tratamiento.precio}
+    
+    - Cantidad de tratamientos: ${carrito.masajes.length}
+    - Subtotal: $${carrito.cuentaTotal}`)
+}
+
+function preguntaOtroTratamiento() {
+    let n = prompt(`¿Te gustaría agregar otro tratamiento?
+    [1] SI
+    [2] NO`)
+    while (n !== "1" && n !== "2") {
+        n = prompt(`La opción elegida no es correcta. ¿Te gustaría agregar otro tratamiento?
+        [1] SI
+        [2] NO`)
+    }
+    if (n == "1") {
+        reservaTratamientos();
+    } else if (n == "2") {
+        alert(`Muchas gracias, a continuación tus elecciones...`)
+    } else {
+        alert(`La opción elegida no es correcta`)
     }
 }
 
 function reservaTurno(cantidad) {
-
+    let anio = 2022
     let dia = 0
     let mes = 0
     let hora = 0
@@ -232,12 +243,11 @@ function reservaTurno(cantidad) {
 
             let input = prompt(`Ingrese el DIA del mes para el tratamiento: \n ${[i + 1]} - ${carrito.masajes[i].nombre} \n [1 - 31]`)
             dia = parseInt(input);
-            carrito.masajes[i].reserva.dia = dia
 
         } while (isNaN(dia) || !(dia >= 1 && dia <= 31));
 
         do {
-            let input = prompt(`DIA elegido: ${carrito.masajes[i].dia} \n Ingrese el MES para el tratamiento: \n ${[i + 1]} - ${carrito.masajes[i].nombre}
+            let input = prompt(`DIA elegido: ${dia} \n Ingrese el MES para el tratamiento: \n ${[i + 1]} - ${carrito.masajes[i].nombre}
             [1] - ENERO             [7] - JULIO
             [2] - FEBRERO          [8] - AGOSTO
             [3] - MARZO            [9] - SEPTIEMBRE
@@ -245,43 +255,46 @@ function reservaTurno(cantidad) {
             [5] - MAYO              [11] - NOVIEMBRE
             [6] - JUNIO              [12] - DICIEMBRE `)
             mes = parseInt(input);
-            carrito.masajes[i].reserva.mes = mes
         } while (isNaN(mes) || !(mes >= 1 && mes <= 12));
 
         do {
-            let input = prompt(`FECHA: ${carrito.masajes[i].dia}/${carrito.masajes[i].mes} \n Ingrese la HORA para el tratamiento: \n ${[i + 1]} - ${carrito.masajes[i].nombre} \n
+            let input = prompt(`FECHA: ${dia}/${mes} \n Ingrese la HORA para el tratamiento: \n ${[i + 1]} - ${carrito.masajes[i].nombre} \n
             [Trabajamos de 9 a 17 horas]`)
             hora = parseInt(input);
-            carrito.masajes[i].reserva.hora = hora
         } while (isNaN(hora) || !(hora >= 9 && hora <= 17));
 
-        mensajeTurnos += `El tratamiento  ${[i + 1]} - ${carrito.masajes[i].nombre} sera el día ${dia} / ${mes} a las ${hora}hs. \n`
+        const fechaReserva = new Date(anio, mes-1, dia, hora)
+        carrito.masajes[i].cambiarFecha(fechaReserva)
+        carrito.mensajeTurnos += `El tratamiento  ${[i + 1]} - ${carrito.masajes[i].nombre} sera el día: ${carrito.masajes[i].fecha.getDate()}/${carrito.masajes[i].fecha.getMonth()+1} ${carrito.masajes[i].fecha.getHours()}hs. \n`
     }
-    alert(mensajeTurnos)
+    alert(carrito.mensajeTurnos)
 }
 
 //MAIN//
 
-const nombre = prompt(`Bienvenido a Galatea-Skin, vamos a guiarte en tu proceso de reserva de turno.
+const nombre = prompt(`Bienvenido a Galatea-Skin.
         -¿Cómo es tu nombre?`).toUpperCase()
 
 if (nombre != "") {
     crearTratamientosDesdeArray(tratamientosIniciales)
-    agregarTratamiento()
+    menuPrincipal()
 } else {
     alert("Gracias por visitar Galatea-Skin")
 }
 
 if (carrito.masajes.length != 0) {
 
-    const nombresTratamientos = carrito.masajes.map(tratamiento => tratamiento.nombre)
-    nombresConcat = nombresTratamientos.join("\n")
-    mensajeTratamientos = `${nombre}, has elegido los siguientes tratamientos:\n\n${nombresConcat} \n\n Cantidad de tratamientos: ${carrito.masajes.length} \n El total es: $${carrito.cuentaTotal}`
+    const nombresTratamientos = carrito.masajes.map(tratamiento => tratamiento.nombre).join("\n")
 
-    alert(mensajeTratamientos)
+    carrito.mensajeTratamientos = `${nombre}, has elegido los siguientes tratamientos:\n\n${nombresTratamientos} \n\n Cantidad de tratamientos: ${carrito.masajes.length} \n El total es: $${carrito.cuentaTotal}`
+
+    alert(carrito.mensajeTratamientos)
     reservaTurno(carrito.masajes.length)
 }
 
 if (carrito.masajes.length != 0) {
-    alert(`${mensajeTratamientos} \n \n ${mensajeTurnos} \n \n Agradecemos tu consulta y te esperamos para que disfrutes de nuestro trabajo.`)
+    alert(`${carrito.mensajeTratamientos} \n \n ${carrito.mensajeTurnos} \n \n Agradecemos tu consulta y te esperamos para que disfrutes de nuestro trabajo.`)
 }
+let parrafo = document.getElementById("parrafo")
+console.log(parrafo)
+parrafo.innerHTML = `${nombre} <br> ${carrito.mensajeTurnos} <br> Agradecemos tu consulta y te esperamos para que disfrutes de nuestro trabajo.`
