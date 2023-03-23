@@ -234,8 +234,8 @@ function preguntaOtroTratamiento() {
 
 function reservaTurno(cantidad) {
     let anio = 2022
-    let dia = 0
     let mes = 0
+    let dia = 0
     let hora = 0
 
     for (let i = 0; i < cantidad; i++) {

@@ -1,0 +1,97 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+body {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; }
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 30px; }
+  main header {
+    width: 100%;
+    height: 155px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: rgba(240, 128, 128, 0.5); }
+    main header div p {
+      font-size: larger;
+      color: white; }
+    main header div a .imglogo {
+      width: 150px; }
+    main header div a .imgCarrito {
+      width: 60px; }
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center; }
+
+.tratamiento {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  height: 35px;
+  width: 650px;
+  background-color: lightgreen;
+  border: solid 1px black;
+  border-radius: 20px; }
+  .tratamiento img {
+    height: 25px; }
+
+footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: rgba(240, 128, 128, 0.5);
+  width: 100%;
+  height: 120px; }
+  footer .redesSociales {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 350px; }
+
+.sectionCarrito {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+  .sectionCarrito .carrito {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    border: solid 1px black;
+    border-radius: 25px;
+    height: 400px;
+    width: 650px;
+    background-color: lightblue; }
+    .sectionCarrito .carrito .items {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px; }
+      .sectionCarrito .carrito .items .item {
+        padding-left: 25px;
+        border: solid 1px black;
+        width: 80%;
+        height: 25px;
+        border-radius: 10px; }
+    .sectionCarrito .carrito .totales {
+      align-self: flex-end;
+      margin-right: 50px; }
+      .sectionCarrito .carrito .totales p {
+        font-size: xx-large;
+        font-weight: bolder; }
