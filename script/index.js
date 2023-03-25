@@ -295,6 +295,3 @@ if (carrito.masajes.length != 0) {
 if (carrito.masajes.length != 0) {
     alert(`${carrito.mensajeTratamientos} \n \n ${carrito.mensajeTurnos} \n \n Agradecemos tu consulta y te esperamos para que disfrutes de nuestro trabajo.`)
 }
-let parrafo = document.getElementById("parrafo")
-console.log(parrafo)
-parrafo.innerHTML = `${nombre} <br> ${carrito.mensajeTurnos} <br> Agradecemos tu consulta y te esperamos para que disfrutes de nuestro trabajo.`
