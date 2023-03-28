@@ -9,86 +9,47 @@
     <title>Galatea Skin | Reserva turno</title>
 </head>
 <body>
+    <header></header>
     <main>
-        <header>
-            <div>
-                <p>Bienvenidos a Galatea Skin</p>
-            </div>
-            <div>
-                <a href="#"><img src="./assets/img/galateaLogo.png" alt="" class="imglogo"></a>
-            </div>
-            <div>
-                <p>Reserva de turnos</p>
-            </div>
-            <div>
-                <a href="#"><img src="./assets/img/carrito.png" alt="" class="imgCarrito"></a>
-            </div>
-        </header>
-
-        <main>
-            <section class="lista">
-                <h2>LISTA DE TRATAMIENTOS</h2>
-                <div class="tratamiento">
-                    <p>NOMBRE TRATAMIENTO</p>
-                    <p>$4000</p>
-                    <a href="#"><img src="./assets/img/carrito.png" alt="" class="carritoCard"></a> 
-                </div>
-                <div class="tratamiento">
-                    <p>NOMBRE TRATAMIENTO</p>
-                    <p>$4000</p>
-                    <a href="#"><img src="./assets/img/carrito.png" alt="" class="carritoCard"></a> 
-                </div>
-                <div class="tratamiento">
-                    <p>NOMBRE TRATAMIENTO</p>
-                    <p>$4000</p>
-                    <a href="#"><img src="./assets/img/carrito.png" alt="" class="carritoCard"></a> 
-                </div>
-                <div class="tratamiento">
-                    <p>NOMBRE TRATAMIENTO</p>
-                    <p>$4000</p>
-                    <a href="#"><img src="./assets/img/carrito.png" alt="" class="carritoCard"></a> 
-                </div>
-                <div class="tratamiento">
-                    <p>NOMBRE TRATAMIENTO</p>
-                    <p>$4000</p>
-                    <a href="#"><img src="./assets/img/carrito.png" alt="" class="carritoCard"></a> 
-                </div>
-                <div class="tratamiento">
-                    <p>NOMBRE TRATAMIENTO</p>
-                    <p>$4000</p>
-                    <a href="#"><img src="./assets/img/carrito.png" alt="" class="carritoCard"></a> 
-                </div>
-                <div class="tratamiento">
-                    <p>NOMBRE TRATAMIENTO</p>
-                    <p>$4000</p>
-                    <a href="#"><img src="./assets/img/carrito.png" alt="" class="carritoCard"></a> 
-                </div>
-            </section>
-            <section class="sectionCarrito">
-                <H2>CARRITO</H2>
-                <div class="carrito">
-                    <div class="items">
-                        <div class="item">item 1</div>
-                        <div class="item">item 2</div>
-                        <div class="item">item 3</div>
-                        <div class="item">item 4</div>
-                        <div class="item">item 5</div>
+        <section id="carrito">
+            <h2>Mis reservas</h2>
+            <div id="carrito__tratamientos">
+                <div class="carrito__tratamientos__item">
+                    <div class="item__tipo__tratamiento">
                     </div>
-                    <div class="totales">
-                        <p>$1250</p>
+                    <div class="item__info">
+                        <p class="item__nombre">Nombre Tratamiento</p>
+                        <div class="item__fecha">
+                            <p>Fecha: 
+                                <span class="item__fecha__dia">##</span>
+                                /
+                                <span class="item__fecha__mes">##</span>
+                                /
+                                <span class="item__fecha__año">##</span>
+                                --
+                                <span class="item__fecha__hora">##</span> hs.
+                            </p>
+                            <div class="item__fecha__boton"><svg width="30" height="30" viewBox="0 0 256 256"><path fill="currentColor" d="M208 34h-26V24a6 6 0 0 0-12 0v10H86V24a6 6 0 0 0-12 0v10H48a14 14 0 0 0-14 14v160a14 14 0 0 0 14 14h160a14 14 0 0 0 14-14V48a14 14 0 0 0-14-14ZM48 46h26v10a6 6 0 0 0 12 0V46h84v10a6 6 0 0 0 12 0V46h26a2 2 0 0 1 2 2v34H46V48a2 2 0 0 1 2-2Zm160 164H48a2 2 0 0 1-2-2V94h164v114a2 2 0 0 1-2 2Zm-98-90v64a6 6 0 0 1-12 0v-54.29l-7.32 3.66a6 6 0 1 1-5.36-10.74l16-8A6 6 0 0 1 110 120Zm59.57 29.25L148 178h20a6 6 0 0 1 0 12h-32a6 6 0 0 1-4.8-9.6L160 142a10 10 0 1 0-16.65-11a6 6 0 1 1-10.35-6a22 22 0 1 1 36.62 24.26Z"/></svg></div>
+                        </div>
+                    </div>
+                    <div class="item__precio__eliminar">
+                        <a href="" class="item__eliminar"><svg width="30" height="30" viewBox="0 0 256 256"><path fill="currentColor" d="M168.49 104.49L145 128l23.52 23.51a12 12 0 0 1-17 17L128 145l-23.51 23.52a12 12 0 0 1-17-17L111 128l-23.49-23.51a12 12 0 0 1 17-17L128 111l23.51-23.52a12 12 0 0 1 17 17ZM236 128A108 108 0 1 1 128 20a108.12 108.12 0 0 1 108 108Zm-24 0a84 84 0 1 0-84 84a84.09 84.09 0 0 0 84-84Z"/></svg></a>
+                        <p class="item__precio">$1500</p>
                     </div>
                 </div>
-            </section>
-        </main>
-
-        <footer>
-            <div class="redesSociales">
-                <img src="./assets/img/facebook.png" alt="">
-                <img src="./assets/img/instagram.png" alt="">
-                <img src="./assets/img/wsp.png" alt="">
             </div>
-            <p>COPYRIGHT - TODOS LOS DERECHOS RESERVADOS</p>
-        </footer>
+            <div id="total">
+                <p>$15000</p>
+            </div>
+            <div>
+                <input type="text" name="cupon" id="cupon">
+                <label for="cupon" title="cupon">cupon</label>
+            </div>
+        </section>
+
+        <section class="cuerpo"></section>
+
     </main>
+    <footer></footer>
 </body>
 </html>

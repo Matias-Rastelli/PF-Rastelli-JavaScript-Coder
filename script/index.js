@@ -1,11 +1,14 @@
 // simulador de pago y reserva de turnos de estetica //
+
 const carrito = {cuentaTotal: 0, masajes: [], mensajeTratamientos:"" , mensajeTurnos:"" }
 const tratamientos = []
 
 class Tratamientos {
-    constructor(nombre, precio) {
+    constructor(nombre, precio, categoria) {
         this.nombre = nombre
+        this.descripcion = ""
         this.precio = parseFloat(precio)
+        this.categoria = categoria
         this.id = tratamientos.length + 1
         this.fecha = new Date()
     }
@@ -34,17 +37,41 @@ class Tratamientos {
 }
 
 const tratamientosIniciales = [
-    { nombre: "Masajes descontracturantes", precio: 2500 },
-    { nombre: "Masajes relajantes", precio: 2000 },
-    { nombre: "Vacum", precio: 1500 },
-    { nombre: "Limpieza facial", precio: 1000 },
+    { nombre: "Masajes descontracturantes", precio: 2500, categoria: "cuerpo" },
+    { nombre: "Masajes relajantes", precio: 2000, categoria: "cuerpo" },
+    { nombre: "Vacum", precio: 1500, categoria: "cuerpo" },
+    { nombre: "Limpieza facial", precio: 1000, categoria: "manos" },
+    { nombre: "Pedicura", precio: 1000, categoria: "pies" },
+    { nombre: "Botox", precio: 3000, categoria: "cabeza" },
 ]
 
 function crearTratamientosDesdeArray(arrayTratamientos) {
     arrayTratamientos.forEach((tratamiento) => {
-        const nuevoTratamiento = new Tratamientos(tratamiento.nombre, tratamiento.precio);
+        const nuevoTratamiento = new Tratamientos(tratamiento.nombre, tratamiento.precio, tratamiento.categoria);
         tratamientos.push(nuevoTratamiento);
     });
+}
+
+function crearTabla() {
+    
+    console.log(tratamientos)
+    const tabla = document.getElementById("body-tabla")
+    console.log(tabla)
+
+    const tablaFiltrada = tratamientos.filter(elemento => elemento.categoria === "pies")
+
+    tablaFiltrada.forEach((tratamiento) => {
+        const itemTabla = document.createElement("tr")
+        itemTabla.innerHTML = ` 
+        <td>${tratamiento.id} </td>
+        <td>${tratamiento.nombre} </td>
+        <td>$${tratamiento.precio} </td>
+        <td>${tratamiento.categoria} </td>
+        <td><button class="boton-editar">EDITAR</button></th>
+        `
+
+        tabla.appendChild(itemTabla)
+    })
 }
 
 function menuPrincipal() {
@@ -233,7 +260,7 @@ function preguntaOtroTratamiento() {
 }
 
 function reservaTurno(cantidad) {
-    let anio = 2022
+    let anio = 2023
     let mes = 0
     let dia = 0
     let hora = 0
@@ -272,12 +299,15 @@ function reservaTurno(cantidad) {
 
 //MAIN//
 
+
+
 const nombre = prompt(`Bienvenido a Galatea-Skin.
         -¿Cómo es tu nombre?`).toUpperCase()
 
 if (nombre != "") {
     crearTratamientosDesdeArray(tratamientosIniciales)
     menuPrincipal()
+    crearTabla(2000)
 } else {
     alert("Gracias por visitar Galatea-Skin")
 }
@@ -295,6 +325,3 @@ if (carrito.masajes.length != 0) {
 if (carrito.masajes.length != 0) {
     alert(`${carrito.mensajeTratamientos} \n \n ${carrito.mensajeTurnos} \n \n Agradecemos tu consulta y te esperamos para que disfrutes de nuestro trabajo.`)
 }
-let parrafo = document.getElementById("parrafo")
-console.log(parrafo)
-parrafo.innerHTML = `${nombre} <br> ${carrito.mensajeTurnos} <br> Agradecemos tu consulta y te esperamos para que disfrutes de nuestro trabajo.`

@@ -4,94 +4,98 @@
   box-sizing: border-box; }
 
 body {
-  height: 100vh;
-  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; }
+  justify-content: space-between;
+  min-height: 100vh; }
+
+header, footer {
+  height: 100px;
+  background-color: lightcoral; }
 
 main {
   display: flex;
-  flex-direction: column;
-  gap: 30px; }
-  main header {
-    width: 100%;
-    height: 155px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    background-color: rgba(240, 128, 128, 0.5); }
-    main header div p {
-      font-size: larger;
-      color: white; }
-    main header div a .imglogo {
-      width: 150px; }
-    main header div a .imgCarrito {
-      width: 60px; }
-
-.lista {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  align-items: center; }
-
-.tratamiento {
-  display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  height: 35px;
-  width: 650px;
-  background-color: lightgreen;
+  justify-content: space-between;
+  width: 100%; }
+
+#carrito {
+  height: 100%;
+  width: 30%;
   border: solid 1px black;
-  border-radius: 20px; }
-  .tratamiento img {
-    height: 25px; }
-
-footer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-evenly;
-  background-color: rgba(240, 128, 128, 0.5);
-  width: 100%;
-  height: 120px; }
-  footer .redesSociales {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    width: 350px; }
-
-.sectionCarrito {
-  display: flex;
-  flex-direction: column;
-  align-items: center; }
-  .sectionCarrito .carrito {
+  background-color: lightblue; }
+  #carrito h2 {
+    font-size: 36px;
+    text-align: center;
+    font-weight: bolder; }
+  #carrito #carrito__tratamientos {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 20px;
-    border: solid 1px black;
-    border-radius: 25px;
-    height: 400px;
-    width: 650px;
-    background-color: lightblue; }
-    .sectionCarrito .carrito .items {
+    justify-content: space-around;
+    align-items: center;
+    gap: 5px;
+    width: 100%; }
+    #carrito #carrito__tratamientos .carrito__tratamientos__item {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      gap: 10px; }
-      .sectionCarrito .carrito .items .item {
-        padding-left: 25px;
-        border: solid 1px black;
-        width: 80%;
-        height: 25px;
-        border-radius: 10px; }
-    .sectionCarrito .carrito .totales {
-      align-self: flex-end;
-      margin-right: 50px; }
-      .sectionCarrito .carrito .totales p {
-        font-size: xx-large;
-        font-weight: bolder; }
+      border: 1px solid black;
+      border-radius: 10px;
+      width: 95%;
+      height: 70px; }
+      #carrito #carrito__tratamientos .carrito__tratamientos__item .item__tipo__tratamiento {
+        margin-left: 10px;
+        width: 60px;
+        height: 60px;
+        border: 1px solid black;
+        border-radius: 50%;
+        background-color: lightcyan; }
+      #carrito #carrito__tratamientos .carrito__tratamientos__item .item__info {
+        display: flex;
+        flex-direction: column; }
+        #carrito #carrito__tratamientos .carrito__tratamientos__item .item__info .item__nombre {
+          font-weight: 600;
+          font-size: x-large; }
+        #carrito #carrito__tratamientos .carrito__tratamientos__item .item__info .item__fecha {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 10px;
+          font-size: large; }
+          #carrito #carrito__tratamientos .carrito__tratamientos__item .item__info .item__fecha .item__fecha__boton {
+            color: rgba(255, 0, 0, 0.6);
+            cursor: pointer; }
+            #carrito #carrito__tratamientos .carrito__tratamientos__item .item__info .item__fecha .item__fecha__boton :hover {
+              color: red; }
+      #carrito #carrito__tratamientos .carrito__tratamientos__item .item__precio__eliminar {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-end;
+        text-decoration: none; }
+        #carrito #carrito__tratamientos .carrito__tratamientos__item .item__precio__eliminar .item__eliminar {
+          color: rgba(255, 0, 0, 0.6);
+          margin-top: 10px;
+          margin-right: 10px; }
+          #carrito #carrito__tratamientos .carrito__tratamientos__item .item__precio__eliminar .item__eliminar :hover {
+            color: red; }
+        #carrito #carrito__tratamientos .carrito__tratamientos__item .item__precio__eliminar .item__precio {
+          margin-right: 10px;
+          margin-bottom: 5px;
+          font-size: 30px; }
+  #carrito #cupon {
+    position: relative;
+    text-indent: 10px;
+    font-size: 16px;
+    border-color: #cccccc;
+    border-style: solid;
+    border-radius: 15px;
+    padding: 3px;
+    border-width: 2px;
+    box-shadow: 0px 0px 5px 0px rgba(42, 42, 42, 0.75);
+    font-weight: normal;
+    font-style: none;
+    font-family: sans-serif; }
+    #carrito #cupon :focus {
+      outline: none; }
