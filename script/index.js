@@ -17,11 +17,17 @@ class Tratamientos {
         tratamientos.push(this)
     }
 
+    cambiarNombre(nuevoNombre) {
+        this.nombre = nuevoNombre
+    }
     cambiarPrecio(nuevoPrecio) {
         this.precio = parseFloat(nuevoPrecio)
     }
-    cambiarNombre(nuevoNombre) {
-        this.nombre = nuevoNombre
+    cambiarCategoria(nuevaCategoria){
+        this.categoria = nuevaCategoria
+    }
+    cambiarDescripcion(nuevaDescripcion){
+        this.descripcion = nuevaDescripcion
     }
 
     cambiarFecha(fechaIngresada){
@@ -37,13 +43,165 @@ class Tratamientos {
 }
 
 const tratamientosIniciales = [
-    { nombre: "Masajes descontracturantes", precio: 2500, categoria: "cuerpo" },
-    { nombre: "Masajes relajantes", precio: 2000, categoria: "cuerpo" },
-    { nombre: "Vacum", precio: 1500, categoria: "cuerpo" },
-    { nombre: "Limpieza facial", precio: 1000, categoria: "manos" },
-    { nombre: "Pedicura", precio: 1000, categoria: "pies" },
-    { nombre: "Botox", precio: 3000, categoria: "cabeza" },
+    {
+        nombre: "Tratamientos de hidratación capilar",
+        precio: 3000,
+        descripcion: "Tratamiento para hidratar y revitalizar el cabello seco y maltratado",
+        categoria: "cabeza"
+    },
+    {
+        nombre: "Tratamientos de nutrición capilar",
+        precio: 4000,
+        descripcion: "Tratamiento para nutrir y fortalecer el cabello debilitado y sin vida",
+        categoria: "cabeza"
+    },
+    {
+        nombre: "Tratamientos de queratina",
+        precio: 5000,
+        descripcion: "Tratamiento para alisar y reducir el frizz en el cabello",
+        categoria: "cabeza"
+    },
+    {
+        nombre: "Limpieza facial profunda",
+        precio: 2000,
+        descripcion: "Limpieza facial profunda para eliminar impurezas y células muertas",
+        categoria: "rostro"
+    },
+    {
+        nombre: "Tratamientos de exfoliación facial",
+        precio: 2500,
+        descripcion: "Tratamiento para exfoliar y suavizar la piel del rostro",
+        categoria: "rostro"
+    },
+    {
+        nombre: "Tratamientos de eliminación de puntos negros y espinillas",
+        precio: 3000,
+        descripcion: "Tratamiento para remover los puntos negros y espinillas del rostro",
+        categoria: "rostro"
+    },
+    {
+        nombre: "Tratamientos de lifting facial",
+        precio: 4500,
+        descripcion: "Tratamiento para levantar y reafirmar la piel del rostro",
+        categoria: "rostro"
+    },
+    {
+        nombre: "Tratamientos de microdermabrasión",
+        precio: 3500,
+        descripcion: "Tratamiento para exfoliar y mejorar la textura de la piel del rostro",
+        categoria: "rostro"
+    },
+    {
+        nombre: "Tratamientos de radiofrecuencia facial",
+        precio: 4000,
+        descripcion: "Tratamiento para rejuvenecer y tonificar la piel del rostro",
+        categoria: "rostro"
+    },
+    {
+        nombre: 'Masaje relajante',
+        precio: 2500,
+        descripcion: 'Masaje suave y relajante que ayuda a reducir el estrés y la ansiedad.',
+        categoria: 'cuerpo'
+    },
+    {
+        nombre: 'Masaje descontracturante',
+        precio: 3500,
+        descripcion: 'Masaje profundo que ayuda a aliviar la tensión muscular y reducir las contracturas.',
+        categoria: 'cuerpo'
+    },
+    {
+        nombre: 'Masaje deportivo',
+        precio: 4500,
+        descripcion: 'Masaje intenso que ayuda a prevenir lesiones y mejorar el rendimiento físico.',
+        categoria: 'cuerpo'
+    },
+    {
+        nombre: 'Masaje de drenaje linfático',
+        precio: 3000,
+        descripcion: 'Masaje suave y lento que ayuda a mejorar la circulación linfática y reducir la retención de líquidos.',
+        categoria: 'cuerpo'
+    },
+    {
+        nombre: 'Masaje reflexológico',
+        precio: 2000,
+        descripcion: 'Masaje que se enfoca en los puntos de reflexología para aliviar dolores y mejorar la salud general del cuerpo.',
+        categoria: 'cuerpo'
+    },
+    {
+        nombre: 'Masaje con piedras calientes',
+        precio: 4000,
+        descripcion: 'Masaje que utiliza piedras calientes para relajar los músculos y mejorar la circulación sanguínea.',
+        categoria: 'cuerpo'
+    },
+    {
+        nombre: 'Masaje con ventosas',
+        precio: 3500,
+        descripcion: 'Masaje que utiliza ventosas para mejorar la circulación sanguínea y reducir la tensión muscular.',
+        categoria: 'cuerpo'
+    },
+    {
+        nombre: 'Masaje con aromaterapia',
+        precio: 3000,
+        descripcion: 'Masaje que utiliza aceites esenciales para relajar y equilibrar el cuerpo y la mente.',
+        categoria: 'cuerpo'
+    },
+    {
+        nombre: 'Masaje con digitopresión',
+        precio: 2500,
+        descripcion: 'Masaje que utiliza la presión de los dedos para aliviar dolores y mejorar la circulación.',
+        categoria: 'cuerpo'
+    },
+    {
+        nombre: 'Masaje de tejido profundo',
+        precio: 4500,
+        descripcion: 'Masaje intenso que llega a las capas más profundas de los músculos para aliviar la tensión crónica y mejorar la postura.',
+        categoria: 'cuerpo'
+    },
+    {
+        nombre: "Pedicura básica",
+        precio: 1500,
+        descripcion: "Incluye corte y limado de uñas, retiro de cutículas y esmaltado.",
+        categoria: "pies"
+    },
+    {
+        nombre: "Pedicura Spa",
+        precio: 2500,
+        descripcion: "Incluye baño de pies, exfoliación, hidratación y masaje.",
+        categoria: "pies"
+    },
+    {
+        nombre: "Reflexología",
+        precio: 2000,
+        descripcion: "Terapia de masaje aplicada a los pies para estimular puntos reflejos en el cuerpo.",
+        categoria: "pies"
+    },
+    {
+        nombre: "Tratamiento de parafina",
+        precio: 3000,
+        descripcion: "Sumergir los pies en parafina caliente para hidratar y suavizar la piel.",
+        categoria: "pies"
+    },
+    {
+        nombre: "Tratamiento de la piel seca",
+        precio: 2000,
+        descripcion: "Tratamiento para hidratar y suavizar la piel seca de los pies.",
+        categoria: "pies"
+    },
+    {
+        nombre: "Masaje de pies",
+        precio: 1500,
+        descripcion: "Terapia de masaje aplicada a los pies para aliviar tensiones y mejorar la circulación.",
+        categoria: "pies"
+    },
+    {
+        nombre: "Tratamiento de hongos en las uñas",
+        precio: 3500,
+        descripcion: "Tratamiento para eliminar los hongos en las uñas de los pies.",
+        categoria: "pies"
+    }
 ]
+
+
 
 function crearTratamientosDesdeArray(arrayTratamientos) {
     arrayTratamientos.forEach((tratamiento) => {
@@ -297,9 +455,8 @@ function reservaTurno(cantidad) {
     alert(carrito.mensajeTurnos)
 }
 
+
 //MAIN//
-
-
 
 const nombre = prompt(`Bienvenido a Galatea-Skin.
         -¿Cómo es tu nombre?`).toUpperCase()
@@ -307,7 +464,6 @@ const nombre = prompt(`Bienvenido a Galatea-Skin.
 if (nombre != "") {
     crearTratamientosDesdeArray(tratamientosIniciales)
     menuPrincipal()
-    crearTabla(2000)
 } else {
     alert("Gracias por visitar Galatea-Skin")
 }
@@ -323,4 +479,4 @@ if (carrito.masajes.length != 0) {
 }
 
 if (carrito.masajes.length != 0) {
-    alert(`${carrito.mensajeTratamientos} \n \n ${carrito.mensajeTurnos} \n \n Agradecemos tu consulta y te esperamos para que disfrutes de nuestro trabajo.`)
+    alert(`${carrito.mensajeTratamientos} \n \n ${carrito.mensajeTurnos} \n \n Agradecemos tu consulta y te esperamos para que disfrutes de nuestro trabajo.`)}

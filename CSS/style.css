@@ -9,25 +9,35 @@ body {
   justify-content: space-between;
   min-height: 100vh; }
 
-header, footer {
-  height: 100px;
+header {
+  height: 15vh;
+  background-color: lightgreen; }
+
+footer {
+  height: 10vh;
   background-color: lightcoral; }
 
 main {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  width: 100%; }
+  width: 100%;
+  min-height: 75vh; }
 
 #carrito {
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+  min-height: 100%;
   width: 30%;
   border: solid 1px black;
   background-color: lightblue; }
   #carrito h2 {
     font-size: 36px;
     text-align: center;
-    font-weight: bolder; }
+    font-weight: bolder;
+    margin: 15px 0px; }
   #carrito #carrito__tratamientos {
     display: flex;
     flex-direction: column;
@@ -43,7 +53,8 @@ main {
       border: 1px solid black;
       border-radius: 10px;
       width: 95%;
-      height: 70px; }
+      height: 70px;
+      box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75); }
       #carrito #carrito__tratamientos .carrito__tratamientos__item .item__tipo__tratamiento {
         margin-left: 10px;
         width: 60px;
@@ -84,18 +95,101 @@ main {
           margin-right: 10px;
           margin-bottom: 5px;
           font-size: 30px; }
-  #carrito #cupon {
-    position: relative;
-    text-indent: 10px;
-    font-size: 16px;
-    border-color: #cccccc;
-    border-style: solid;
-    border-radius: 15px;
-    padding: 3px;
-    border-width: 2px;
-    box-shadow: 0px 0px 5px 0px rgba(42, 42, 42, 0.75);
-    font-weight: normal;
-    font-style: none;
-    font-family: sans-serif; }
-    #carrito #cupon :focus {
-      outline: none; }
+  #carrito #infoTotal {
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    #carrito #infoTotal #total {
+      display: inline-block;
+      margin: 20px;
+      text-shadow: 4px 4px 7px rgba(0, 0, 0, 0.6);
+      font-size: xx-large;
+      font-weight: bolder; }
+    #carrito #infoTotal #btnPagar {
+      width: 100px;
+      height: 40px;
+      cursor: pointer;
+      box-shadow: inset 0px 1px 0px 0px #f29c93;
+      background-color: red;
+      border-radius: 6px;
+      border: 1px solid black;
+      display: inline-block;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: bold;
+      text-decoration: none;
+      text-shadow: 0px 1px 0px #b23e35; }
+      #carrito #infoTotal #btnPagar:active {
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3), 0 3px 7px rgba(0, 0, 0, 0.3); }
+      #carrito #infoTotal #btnPagar:hover {
+        background-color: #ffffff;
+        color: red; }
+  #carrito #divCupon {
+    margin-bottom: 20px; }
+    #carrito #divCupon #cupon {
+      text-indent: 10px;
+      font-size: 16px;
+      border-color: #cccccc;
+      border-style: solid;
+      border-radius: 15px;
+      padding: 3px;
+      border-width: 2px;
+      box-shadow: 0px 0px 5px 0px rgba(42, 42, 42, 0.75);
+      font-weight: normal;
+      font-style: none;
+      font-family: sans-serif; }
+    #carrito #divCupon #btnCupon {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer; }
+
+#cuerpo {
+  display: flex;
+  flex-direction: row;
+  width: 70%;
+  justify-content: space-evenly; }
+  #cuerpo .columna {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly; }
+    #cuerpo .columna .listadoTratamientos {
+      padding: 2px;
+      border: solid 1px black;
+      border-radius: 10px;
+      cursor: pointer; }
+      #cuerpo .columna .listadoTratamientos:hover {
+        background-color: lightskyblue; }
+      #cuerpo .columna .listadoTratamientos h2 {
+        border-bottom: 1px solid black;
+        text-align: center;
+        margin-bottom: 5px;
+        margin-inline: 25px; }
+      #cuerpo .columna .listadoTratamientos .contenedorCategoria {
+        display: flex;
+        flex-direction: column;
+        gap: 2px; }
+        #cuerpo .columna .listadoTratamientos .contenedorCategoria .itemParaComprar {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          gap: 10px;
+          border: 1px solid black;
+          border-radius: 5px;
+          margin: 0px 10px;
+          padding: 1px 10px; }
+        #cuerpo .columna .listadoTratamientos .contenedorCategoria .ItemListado {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          gap: 10px;
+          margin: 0px 10px;
+          padding: 1px 10px; }
+          #cuerpo .columna .listadoTratamientos .contenedorCategoria .ItemListado .imgInfo, #cuerpo .columna .listadoTratamientos .contenedorCategoria .ItemListado .imgCarrito {
+            display: none; }
+
+#imgCuerpo {
+  max-height: 70vh;
+  width: auto; }

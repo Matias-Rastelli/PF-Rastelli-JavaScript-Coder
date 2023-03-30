@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="./script/index.js" defer></script>
+    <script src="./script/inde.js" defer></script>
     <link rel="stylesheet" href="./CSS/style.css">
     <title>Galatea Skin | Reserva turno</title>
 </head>
@@ -37,17 +37,186 @@
                         <p class="item__precio">$1500</p>
                     </div>
                 </div>
+                </div>
             </div>
-            <div id="total">
-                <p>$15000</p>
+            <div id="infoTotal">
+                <p id="total">TOTAL: $15000</p>
+                <button id="btnPagar">PAGAR</button>
             </div>
-            <div>
-                <input type="text" name="cupon" id="cupon">
-                <label for="cupon" title="cupon">cupon</label>
+            <div id="divCupon">
+                <input type="text" name="cupon" id="cupon" placeholder="Ingrese su cupón">
+                <label for="cupon" title="cupon"></label>
+                <button id="btnCupon">OK</button>
             </div>
         </section>
 
-        <section class="cuerpo"></section>
+        <section id="cuerpo">
+            <div class="columna">
+                <div class="listadoTratamientos">
+                    <h2>Tratamientos en la Cabeza</h2>
+                    <div class="contenedorCategoria" id="contenedorCabeza">
+                        <div class="ItemListado">
+                            <p class="itemParaComprar__Nombre">Nombre tratamiento</p>
+                            <img src="./assets/img/info.png" alt="info tratamiento" class="imgInfo">
+                            <p class="itemParaComprar__Precio">$2500</p>
+                            <img src="./assets/img/carrito.png" alt="comprar" class="imgCarrito">
+                        </div>
+                        <div class="ItemListado">
+                            <p class="itemParaComprar__Nombre">Nombre tratamiento</p>
+                            <img src="./assets/img/info.png" alt="info tratamiento" class="imgInfo">
+                            <p class="itemParaComprar__Precio">$2500</p>
+                            <img src="./assets/img/carrito.png" alt="comprar" class="imgCarrito">
+                        </div>
+                        <div class="ItemListado">
+                            <p class="itemParaComprar__Nombre">Nombre tratamiento</p>
+                            <img src="./assets/img/info.png" alt="info tratamiento" class="imgInfo">
+                            <p class="itemParaComprar__Precio">$2500</p>
+                            <img src="./assets/img/carrito.png" alt="comprar" class="imgCarrito">
+                        </div>
+                        <div class="ItemListado">
+                            <p class="itemParaComprar__Nombre">Nombre tratamiento</p>
+                            <img src="./assets/img/info.png" alt="info tratamiento" class="imgInfo">
+                            <p class="itemParaComprar__Precio">$2500</p>
+                            <img src="./assets/img/carrito.png" alt="comprar" class="imgCarrito">
+                        </div>
+                        <div class="ItemListado">
+                            <p class="itemParaComprar__Nombre">Nombre tratamiento</p>
+                            <img src="./assets/img/info.png" alt="info tratamiento" class="imgInfo">
+                            <p class="itemParaComprar__Precio">$2500</p>
+                            <img src="./assets/img/carrito.png" alt="comprar" class="imgCarrito">
+                        </div>
+                        <div class="ItemListado">
+                            <p class="itemParaComprar__Nombre">Nombre tratamiento</p>
+                            <img src="./assets/img/info.png" alt="info tratamiento" class="imgInfo">
+                            <p class="itemParaComprar__Precio">$2500</p>
+                            <img src="./assets/img/carrito.png" alt="comprar" class="imgCarrito">
+                        </div>
+                        <div class="ItemListado">
+                            <p class="itemParaComprar__Nombre">Nombre tratamiento</p>
+                            <img src="./assets/img/info.png" alt="info tratamiento" class="imgInfo">
+                            <p class="itemParaComprar__Precio">$2500</p>
+                            <img src="./assets/img/carrito.png" alt="comprar" class="imgCarrito">
+                        </div>
+                        <div class="ItemListado">
+                            <p class="itemParaComprar__Nombre">Nombre tratamiento</p>
+                            <img src="./assets/img/info.png" alt="info tratamiento" class="imgInfo">
+                            <p class="itemParaComprar__Precio">$2500</p>
+                            <img src="./assets/img/carrito.png" alt="comprar" class="imgCarrito">
+                        </div>
+                        <div class="ItemListado">
+                            <p class="itemParaComprar__Nombre">Nombre tratamiento</p>
+                            <img src="./assets/img/info.png" alt="info tratamiento" class="imgInfo">
+                            <p class="itemParaComprar__Precio">$2500</p>
+                            <img src="./assets/img/carrito.png" alt="comprar" class="imgCarrito">
+                        </div>
+                    </div>
+                </div>
+                <div class="listadoTratamientos">
+                    <h2>Tratamientos en las Manos</h2>
+                    <div class="contenedorCategoria" id="contenedorManos">
+                        <div class="ItemListado">
+                            <p class="itemParaComprar__Nombre">Nombre tratamiento</p>
+                            <img src="./assets/img/info.png" alt="info tratamiento" class="imgInfo">
+                            <p class="itemParaComprar__Precio">$2500</p>
+                            <img src="./assets/img/carrito.png" alt="comprar" class="imgCarrito">
+                        </div>
+                        <div class="ItemListado">
+                            <p class="itemParaComprar__Nombre">Nombre tratamiento</p>
+                            <img src="./assets/img/info.png" alt="info tratamiento" class="imgInfo">
+                            <p class="itemParaComprar__Precio">$2500</p>
+                            <img src="./assets/img/carrito.png" alt="comprar" class="imgCarrito">
+                        </div>
+                        <div class="ItemListado">
+                            <p class="itemParaComprar__Nombre">Nombre tratamiento</p>
+                            <img src="./assets/img/info.png" alt="info tratamiento" class="imgInfo">
+                            <p class="itemParaComprar__Precio">$2500</p>
+                            <img src="./assets/img/carrito.png" alt="comprar" class="imgCarrito">
+                        </div>
+                        <div class="ItemListado">
+                            <p class="itemParaComprar__Nombre">Nombre tratamiento</p>
+                            <img src="./assets/img/info.png" alt="info tratamiento" class="imgInfo">
+                            <p class="itemParaComprar__Precio">$2500</p>
+                            <img src="./assets/img/carrito.png" alt="comprar" class="imgCarrito">
+                        </div>
+                        <div class="ItemListado">
+                            <p class="itemParaComprar__Nombre">Nombre tratamiento</p>
+                            <img src="./assets/img/info.png" alt="info tratamiento" class="imgInfo">
+                            <p class="itemParaComprar__Precio">$2500</p>
+                            <img src="./assets/img/carrito.png" alt="comprar" class="imgCarrito">
+                        </div>
+                        <div class="ItemListado">
+                            <p class="itemParaComprar__Nombre">Nombre tratamiento</p>
+                            <img src="./assets/img/info.png" alt="info tratamiento" class="imgInfo">
+                            <p class="itemParaComprar__Precio">$2500</p>
+                            <img src="./assets/img/carrito.png" alt="comprar" class="imgCarrito">
+                        </div>
+                        <div class="ItemListado">
+                            <p class="itemParaComprar__Nombre">Nombre tratamiento</p>
+                            <img src="./assets/img/info.png" alt="info tratamiento" class="imgInfo">
+                            <p class="itemParaComprar__Precio">$2500</p>
+                            <img src="./assets/img/carrito.png" alt="comprar" class="imgCarrito">
+                        </div>
+                        <div class="ItemListado">
+                            <p class="itemParaComprar__Nombre">Nombre tratamiento</p>
+                            <img src="./assets/img/info.png" alt="info tratamiento" class="imgInfo">
+                            <p class="itemParaComprar__Precio">$2500</p>
+                            <img src="./assets/img/carrito.png" alt="comprar" class="imgCarrito">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="columna">
+                <img src="./assets/img/cuerpo.png" alt="Cuerpo Completo" id="imgCuerpo">
+            </div>
+            <div class="columna">
+                <div class="listadoTratamientos">
+                    <h2>Tratamientos en el Cuerpo</h2>
+                    <div class="contenedorCategoria" id="contenedorCuerpo">
+                        <div class="itemParaComprar">
+                            <p class="itemParaComprar__Nombre">Nombre tratamiento</p>
+                            <img src="./assets/img/info.png" alt="info tratamiento">
+                            <p class="itemParaComprar__Precio">$2500</p>
+                            <img src="./assets/img/carrito.png" alt="comprar">
+                        </div>
+                        <div class="itemParaComprar">
+                            <p class="itemParaComprar__Nombre">Nombre tratamiento</p>
+                            <img src="./assets/img/info.png" alt="info tratamiento">
+                            <p class="itemParaComprar__Precio">$2500</p>
+                            <img src="./assets/img/carrito.png" alt="comprar">
+                        </div>
+                        <div class="itemParaComprar">
+                            <p class="itemParaComprar__Nombre">Nombre tratamiento</p>
+                            <img src="./assets/img/info.png" alt="info tratamiento">
+                            <p class="itemParaComprar__Precio">$2500</p>
+                            <img src="./assets/img/carrito.png" alt="comprar">
+                        </div>
+                        <div class="itemParaComprar">
+                            <p class="itemParaComprar__Nombre">Nombre tratamiento</p>
+                            <img src="./assets/img/info.png" alt="info tratamiento">
+                            <p class="itemParaComprar__Precio">$2500</p>
+                            <img src="./assets/img/carrito.png" alt="comprar">
+                        </div>
+                        <div class="itemParaComprar">
+                            <p class="itemParaComprar__Nombre">Nombre tratamiento</p>
+                            <img src="./assets/img/info.png" alt="info tratamiento">
+                            <p class="itemParaComprar__Precio">$2500</p>
+                            <img src="./assets/img/carrito.png" alt="comprar">
+                        </div>
+                    </div>
+                </div>
+                <div class="listadoTratamientos">
+                    <h2>Tratamientos en los Pies</h2>
+                    <div class="contenedorCategoria" id="contenedorPies">
+                        <div class="itemParaComprar">
+                            <p class="itemParaComprar__Nombre">Nombre tratamiento</p>
+                            <img src="./assets/img/info.png" alt="info tratamiento">
+                            <p class="itemParaComprar__Precio">$2500</p>
+                            <img src="./assets/img/carrito.png" alt="comprar">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
     </main>
     <footer></footer>
