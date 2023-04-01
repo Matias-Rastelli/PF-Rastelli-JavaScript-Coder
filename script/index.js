@@ -1,16 +1,20 @@
 // simulador de pago y reserva de turnos de estetica //
 
-const carrito = {cuentaTotal: 0, masajes: [], mensajeTratamientos:"" , mensajeTurnos:"" }
+const carrito = {cuentaTotal: 0, tratamientos: []}
 const tratamientos = []
 
 class Tratamientos {
-    constructor(nombre, precio, categoria) {
+    constructor(nombre, precio, categoria, descripcion) {
+        this.id = tratamientos.length + 1
         this.nombre = nombre
-        this.descripcion = ""
         this.precio = parseFloat(precio)
         this.categoria = categoria
-        this.id = tratamientos.length + 1
+        this.descripcion = descripcion
         this.fecha = new Date()
+    }
+
+    agregarCarrito(){
+        carrito.tratamientos.push(this)
     }
 
     pushearTratamiento() {
@@ -44,19 +48,19 @@ class Tratamientos {
 
 const tratamientosIniciales = [
     {
-        nombre: "Tratamientos de hidratación capilar",
+        nombre: "Hidratación capilar",
         precio: 3000,
         descripcion: "Tratamiento para hidratar y revitalizar el cabello seco y maltratado",
         categoria: "cabeza"
     },
     {
-        nombre: "Tratamientos de nutrición capilar",
+        nombre: "Nutrición capilar",
         precio: 4000,
         descripcion: "Tratamiento para nutrir y fortalecer el cabello debilitado y sin vida",
         categoria: "cabeza"
     },
     {
-        nombre: "Tratamientos de queratina",
+        nombre: "Queratina",
         precio: 5000,
         descripcion: "Tratamiento para alisar y reducir el frizz en el cabello",
         categoria: "cabeza"
@@ -65,37 +69,37 @@ const tratamientosIniciales = [
         nombre: "Limpieza facial profunda",
         precio: 2000,
         descripcion: "Limpieza facial profunda para eliminar impurezas y células muertas",
-        categoria: "rostro"
+        categoria: "cabeza"
     },
     {
-        nombre: "Tratamientos de exfoliación facial",
+        nombre: "Exfoliación facial",
         precio: 2500,
         descripcion: "Tratamiento para exfoliar y suavizar la piel del rostro",
-        categoria: "rostro"
+        categoria: "cabeza"
     },
     {
-        nombre: "Tratamientos de eliminación de puntos negros y espinillas",
+        nombre: "Eliminación de puntos negros y espinillas",
         precio: 3000,
         descripcion: "Tratamiento para remover los puntos negros y espinillas del rostro",
-        categoria: "rostro"
+        categoria: "cabeza"
     },
     {
-        nombre: "Tratamientos de lifting facial",
+        nombre: "Lifting facial",
         precio: 4500,
         descripcion: "Tratamiento para levantar y reafirmar la piel del rostro",
-        categoria: "rostro"
+        categoria: "cabeza"
     },
     {
-        nombre: "Tratamientos de microdermabrasión",
+        nombre: "Microdermabrasión",
         precio: 3500,
         descripcion: "Tratamiento para exfoliar y mejorar la textura de la piel del rostro",
-        categoria: "rostro"
+        categoria: "cabeza"
     },
     {
-        nombre: "Tratamientos de radiofrecuencia facial",
+        nombre: "Radiofrecuencia facial",
         precio: 4000,
         descripcion: "Tratamiento para rejuvenecer y tonificar la piel del rostro",
-        categoria: "rostro"
+        categoria: "cabeza"
     },
     {
         nombre: 'Masaje relajante',
@@ -198,285 +202,208 @@ const tratamientosIniciales = [
         precio: 3500,
         descripcion: "Tratamiento para eliminar los hongos en las uñas de los pies.",
         categoria: "pies"
+    },
+    {
+        nombre: "Manicura básica",
+        precio: 3000,
+        descripcion: "Incluye limado, retirado de cutícula, esmaltado básico y masaje de manos.",
+        categoria: "manos"
+    },
+    {
+        nombre: "Manicura francesa",
+        precio: 3500,
+        descripcion: "Incluye limado, retirado de cutícula, esmaltado francés y masaje de manos.",
+        categoria: "manos"
+    },
+    {
+        nombre: "Parafina de manos",
+        precio: 4000,
+        descripcion: "Tratamiento para hidratar y suavizar la piel de las manos, utilizando parafina caliente.",
+        categoria: "manos"
+    },
+    {
+        nombre: "Manos de seda",
+        precio: 2500,
+        descripcion: "Tratamiento para suavizar e hidratar la piel de las manos, utilizando una mezcla especial de productos.",
+        categoria: "manos"
+    },
+    {
+        nombre: "Manicura spa",
+        precio: 4500,
+        descripcion: "Incluye limado, retirado de cutícula, exfoliación, mascarilla hidratante, masaje y esmaltado básico.",
+        categoria: "manos"
     }
 ]
 
-
-
 function crearTratamientosDesdeArray(arrayTratamientos) {
     arrayTratamientos.forEach((tratamiento) => {
-        const nuevoTratamiento = new Tratamientos(tratamiento.nombre, tratamiento.precio, tratamiento.categoria);
+        const nuevoTratamiento = new Tratamientos(tratamiento.nombre, tratamiento.precio, tratamiento.categoria, tratamiento.descripcion);
         tratamientos.push(nuevoTratamiento);
     });
 }
 
-function crearTabla() {
+crearTratamientosDesdeArray(tratamientosIniciales)
+
+function renderPrinipal(contenedorPrincipal, categoria) {
     
-    console.log(tratamientos)
-    const tabla = document.getElementById("body-tabla")
-    console.log(tabla)
+    const contenedor = contenedorPrincipal
+    const tratamientosFiltrado = tratamientos.filter(elemento => elemento.categoria === categoria)
 
-    const tablaFiltrada = tratamientos.filter(elemento => elemento.categoria === "pies")
+    contenedorCategoria = document.createElement("div")
+    contenedor.appendChild(contenedorCategoria)
+    contenedorCategoria.classList.add("contenedorCategoria")
 
-    tablaFiltrada.forEach((tratamiento) => {
-        const itemTabla = document.createElement("tr")
-        itemTabla.innerHTML = ` 
-        <td>${tratamiento.id} </td>
-        <td>${tratamiento.nombre} </td>
-        <td>$${tratamiento.precio} </td>
-        <td>${tratamiento.categoria} </td>
-        <td><button class="boton-editar">EDITAR</button></th>
-        `
+    tratamientosFiltrado.forEach((tratamiento) => {
+        const itemContenedor = document.createElement("div")
+        itemContenedor.classList.add("ItemListado")
+        itemContenedor.innerHTML = ` 
+            <p class="itemParaComprar__Nombre">${tratamiento.nombre}</p>
+            <img src="./assets/img/info.png" alt="info tratamiento" class="imgInfo">
+            <p class="itemParaComprar__Precio">$${tratamiento.precio}</p>
+            <img src="./assets/img/carrito.png" alt="comprar" class="imgCarrito">
+            `
 
-        tabla.appendChild(itemTabla)
+        const imgCarrito = itemContenedor.querySelector(".imgCarrito");
+        imgCarrito.addEventListener("click", () => {
+            tratamiento.agregarCarrito()
+            carrito.cuentaTotal += tratamiento.precio
+            itemContenedor.style.backgroundColor = "red";
+            renderCarrito()
+            validarCarrito()
+        })
+
+        const imgInfo = itemContenedor.querySelector(".imgInfo");
+        imgInfo.addEventListener("click", () => {
+            
+            const popoverActivo = document.querySelector(".popoverActivo")
+            if (popoverActivo) {
+                popoverActivo.remove()
+            }
+
+            const popover = document.createElement("div")
+            popover.classList.add("popover", "popoverActivo")
+            popover.innerHTML = `
+                <div class="popoverHeader">
+                    <h3>${tratamiento.nombre}</h3>
+                    <div class="cerrarPopover">
+                        <svg viewBox="0 0 256 256">
+                        <path fill="currentColor" d="M168.49 104.49L145 128l23.52 23.51a12 12 0 0 1-17 17L128 145l-23.51 23.52a12 12 0 0 1-17-17L111 128l-23.49-23.51a12 12 0 0 1 17-17L128 111l23.51-23.52a12 12 0 0 1 17 17ZM236 128A108 108 0 1 1 128 20a108.12 108.12 0 0 1 108 108Zm-24 0a84 84 0 1 0-84 84a84.09 84.09 0 0 0 84-84Z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="popoverBody">
+                    <p>${tratamiento.descripcion}</p>
+                </div>
+                `
+
+            itemContenedor.appendChild(popover)
+
+            const cerrarPopover = popover.querySelector(".cerrarPopover")
+            cerrarPopover.addEventListener("click", () => {
+                popover.remove();
+            })
+        })
+
+        contenedorCategoria.appendChild(itemContenedor)
     })
 }
 
-function menuPrincipal() {
-    let opcionMenuPrincipal = prompt(`Bienvenido ${nombre}, ¿Cómo podemos ayudarte?
-    (ingrese el número correspondiente)
 
-        [1] Reservar tratamientos
-        [2] Otro tipo de consulta (elimina reservas)
-        [3] Funciones de administrador
 
-        [4] Salir`)
+renderPrinipal((document.getElementById("contenedorCabeza")), "cabeza")
+renderPrinipal((document.getElementById("contenedorManos")), "manos")
+renderPrinipal((document.getElementById("contenedorCuerpo")), "cuerpo")
+renderPrinipal((document.getElementById("contenedorPies")), "pies")
 
-    switch (opcionMenuPrincipal) {
-        case "1":
-            reservaTratamientos()
 
-            break;
-        case "2":
-            otraConsulta()
+function renderCarrito(){
+    const carritoTratamientos = document.getElementById("carrito__tratamientos")
 
-            break;
-        case "3":
-            loginAdministrador()
+    carritoTratamientos.innerHTML = ""
 
-            break;
-        case "4":
-            if (carrito.masajes.length == 0) {
-                alert(`Gracias ${nombre} por visitar Galatea-Skin, esperamos para la próxima puedas elegirnos.`)
-            }
-            break;
-        default:
-            menuPrincipal()
-            break;
-    }
-}
-
-function loginAdministrador() {
-    let pass = ""
-    let i = 0
-    do {
-        pass = prompt(`Bienvenido Administrador ${nombre} ingresá tu contraseña: (pass: admin)`)
-        i++
-        console.log(i)
-    } while (pass !== "admin" && i <= 2);
-
-    if (i >= 2) {
-        alert(`Lo siento ${nombre} la contraseña es incorrecta y excediste los intentos.`)
-        menuPrincipal()
-    } else { opcionesAdministrador() }
-}
-
-function opcionesAdministrador() {
-
-    function alertaAdministrador(id, accion) {
-        alert(`El tratamiento fue ${accion}, sus nuevos valores son: \n
-        ID: ${tratamientos[id - 1].id}
-        Nombre: ${tratamientos[id - 1].nombre}
-        Precio: ${tratamientos[id - 1].precio}`)
-        opcionesAdministrador()
-    }
-
-    const tratamientosAdministrar = tratamientos.map(tratamiento => `[${tratamiento.id}] - ${tratamiento.nombre}`)
-    const tratamientosAdministrarConcat = tratamientosAdministrar.join("\n")
-
-    let imput = prompt(`Bienvenido ${nombre}, ¿Que te gustaria hacer? 
-    (ingrese el número correspondiente)
-        [1] Cambiar precio a un tratamiento
-        [2] Cambiar nombre a un tratamiento
-        [3] Crear nuevo tratamiento
-        [4] Eliminar un tratamiento
-
-        [5] Volver atras`)
-
-    if (imput == 1) {
-        let id = parseInt(prompt(`¿A que tratamiento le cambiamos el PRECIO? 
-        (ingrese el número correspondiente)\n${tratamientosAdministrarConcat} `))
-
-        if (id < 1 || id > tratamientos.length || isNaN(id)) {
-            alert("El tratamiento no existe o el valor ingresado es incorrecto")
-            opcionesAdministrador()
-        } else {
-            let imput = prompt(`Ingrese el nuevo precio para el tratamiento \n${tratamientos[id - 1].id} - ${tratamientos[id - 1].nombre}\n
-        Precio actual: ${tratamientos[id - 1].precio} `)
-            tratamientos[id - 1].cambiarPrecio(imput)
-            alertaAdministrador(id, "modificado")
+    carrito.tratamientos.forEach((tratamiento) => {
+        if (tratamiento.nombre.length > 28) {
+            tratamiento.nombre = tratamiento.nombre.substring(0, 26) + '..';
         }
-    } else if (imput == 2) {
-        let id = prompt(`¿A que tratamiento le cambiamos el NOMBRE?\n(ingrese el número correspondiente)\n${tratamientosAdministrarConcat}`)
-
-        if (id < 1 || id > tratamientos.length || isNaN(id)) {
-            alert("El tratamiento no existe o el valor ingresado es incorrecto")
-            opcionesAdministrador()
-        } else {
-            let imput = prompt(`Ingrese el nuevo NOMBRE para el tratamiento \n
-        ${tratamientos[id - 1].id} - ${tratamientos[id - 1].nombre} - ${tratamientos[id - 1].precio} `)
-            tratamientos[id - 1].cambiarNombre(imput)
-            alertaAdministrador(id, "modificado")
-        }
-    } else if (imput == 3) {
-        crearNuevoTratamiento(prompt("Ingrese el nombre del nuevo tratamiento: [ej: Masajes de piernas] "), prompt("Ingrese el precio del nuevo tratamiento [ej: 1000] "))
-        alertaAdministrador(tratamientos.length, "agregado")
-
-/*Hay un error al eliminar tratamientos, y es que use el length del array para obtener sus indices,
-y al eliminarlos en el resto de menus no obtiene bien sus id respecto a lo que muestra el alert porq use array.length para determinarlos.
-decidi dejarlo igual para que vean el uso de splice pero sepan que despues de usarlo el resto del codigo no tiene un correcto funcionamiento*/
-    } else if (imput == 4) { 
-        alert("Esta función rompe el resto de menus, explicacion en codigo linea 131")
-        let idTratamientoARemover = prompt(`¿Qué tratamiento te gustaria eliminar?\n(ingrese el número correspondiente)\n${tratamientosAdministrarConcat}`)
-        const tratamientoEliminado = tratamientos.splice(idTratamientoARemover, 1)
-        console.log(tratamientoEliminado)
-        alert(`El tratamiento:\nID: ${tratamientoEliminado[0].id}\nNombre: ${tratamientoEliminado[0].nombre}\nPrecio: ${tratamientoEliminado[0].precio}\nFue eliminado correctamente`)
-        opcionesAdministrador()
-    } else if(imput == 5) {
-        menuPrincipal()
-    } else {
-        alert(`${nombre} La opción ingresada no existe`)
-        opcionesAdministrador()        
-    }
+        const divItem = document.createElement("div")
+        divItem.classList.add("carrito__tratamientos__item")
+        divItem.innerHTML = `
+            <div class="item__tipo__tratamiento">
+            </div>
+            <div class="item__info">
+                <p class="item__nombre">${tratamiento.nombre}</p>
+                <div class="item__fecha">
+                    <p>Fecha: 
+                        <span class="item__fecha__dia">##</span>
+                        /
+                        <span class="item__fecha__mes">##</span>
+                        /
+                        <span class="item__fecha__año">##</span>
+                        --
+                        <span class="item__fecha__hora">##</span> hs.
+                    </p>
+                    <div class="item__fecha__boton"><svg width="30" height="30" viewBox="0 0 256 256"><path fill="currentColor" d="M208 34h-26V24a6 6 0 0 0-12 0v10H86V24a6 6 0 0 0-12 0v10H48a14 14 0 0 0-14 14v160a14 14 0 0 0 14 14h160a14 14 0 0 0 14-14V48a14 14 0 0 0-14-14ZM48 46h26v10a6 6 0 0 0 12 0V46h84v10a6 6 0 0 0 12 0V46h26a2 2 0 0 1 2 2v34H46V48a2 2 0 0 1 2-2Zm160 164H48a2 2 0 0 1-2-2V94h164v114a2 2 0 0 1-2 2Zm-98-90v64a6 6 0 0 1-12 0v-54.29l-7.32 3.66a6 6 0 1 1-5.36-10.74l16-8A6 6 0 0 1 110 120Zm59.57 29.25L148 178h20a6 6 0 0 1 0 12h-32a6 6 0 0 1-4.8-9.6L160 142a10 10 0 1 0-16.65-11a6 6 0 1 1-10.35-6a22 22 0 1 1 36.62 24.26Z"/></svg></div>
+                </div>
+            </div>
+            <div class="item__precio__eliminar">
+            <div class="item__eliminar"><svg width="30" height="30" viewBox="0 0 256 256"><path fill="currentColor" d="M168.49 104.49L145 128l23.52 23.51a12 12 0 0 1-17 17L128 145l-23.51 23.52a12 12 0 0 1-17-17L111 128l-23.49-23.51a12 12 0 0 1 17-17L128 111l23.51-23.52a12 12 0 0 1 17 17ZM236 128A108 108 0 1 1 128 20a108.12 108.12 0 0 1 108 108Zm-24 0a84 84 0 1 0-84 84a84.09 84.09 0 0 0 84-84Z"/></svg></div>
+                <p class="item__precio">$${tratamiento.precio}</p>
+            </div>
+        `
+        const eliminar = divItem.querySelector(".item__eliminar")
+        eliminar.addEventListener("click", () => {
+            const index = carrito.tratamientos.indexOf(tratamiento)
+            carrito.tratamientos.splice(index, 1)
+            carrito.cuentaTotal -= tratamiento.precio
+            total()
+            renderCarrito()
+            validarCarrito()
+        })
+        total()
+        carritoTratamientos.appendChild(divItem)
+    })
 }
 
-function crearNuevoTratamiento(nombre, precio) {
-    const newTratamiento = new Tratamientos(nombre, precio)
-    newTratamiento.pushearTratamiento()
+function total(){
+    const total = document.getElementById("total")
+    total.textContent = `Total: $${carrito.cuentaTotal}`
 }
 
-function otraConsulta() {
-    carrito.cuentaTotal = 0
-    carrito.masajes = []
-    let consulta = prompt(`Dejanos aquí tu consulta:`)
-    let contactoOtraConsulta = prompt(`Ingresá tu email o telefono:`)
 
-    alert(`Muchas gracias ${nombre}.
-    Nos comunicaremos en breve contigo a: ${contactoOtraConsulta}.
-    Por la consulta:
-    ${consulta}`)
-}
-
-function reservaTratamientos() {
-    const tratamientosAdministrar = tratamientos.map(tratamiento => `[${tratamiento.id}] - ${tratamiento.nombre} - $${tratamiento.precio}`)
-    const tratamientosAdministrarConcat = tratamientosAdministrar.join("\n")
-
-    let imput = prompt(`¿Que tratamiento te gustaría realizar?\n(ingrese el número correspondiente)\n${tratamientosAdministrarConcat}\n\n[${tratamientosAdministrar.length + 1}] - Volver atras `)
-    let eleccion = parseInt(tratamientos.findIndex((tratamiento) => tratamiento.id == imput))
-
-    if (imput == tratamientosAdministrar.length + 1) {
-        menuPrincipal()
-    } else {
-        if (eleccion == -1) {
-            alert("Ingrese un número correcto")
-            reservaTratamientos()
-        } else {
-            alertaTratamientos(tratamientos[eleccion])
-            preguntaOtroTratamiento()
-            }
-    }
-}
-
-function alertaTratamientos(tratamiento) {
-
-    carrito.masajes.push(tratamiento)
-    carrito.cuentaTotal += tratamiento.precio
-
-    alert(`${tratamiento.nombre}:
-    - Costo: $${tratamiento.precio}
+function cambiarClase (contenedor){
+    const contenedorPrincipal = document.getElementById(contenedor)
+    const listadoTratamientos = contenedorPrincipal.querySelector(".contenedorCategoria")
+    const ItemListado = listadoTratamientos.querySelectorAll(".ItemListado")
     
-    - Cantidad de tratamientos: ${carrito.masajes.length}
-    - Subtotal: $${carrito.cuentaTotal}`)
+    ItemListado.forEach((elemento) =>{
+        elemento.classList.remove("ItemListado")
+        elemento.classList.add("itemParaComprar")
+    })
 }
 
-function preguntaOtroTratamiento() {
-    let n = prompt(`¿Te gustaría agregar otro tratamiento?
-    [1] SI
-    [2] NO`)
-    while (n !== "1" && n !== "2") {
-        n = prompt(`La opción elegida no es correcta. ¿Te gustaría agregar otro tratamiento?
-        [1] SI
-        [2] NO`)
-    }
-    if (n == "1") {
-        reservaTratamientos();
-    } else if (n == "2") {
-        alert(`Muchas gracias, a continuación tus elecciones...`)
+function ocultar(contenedorID){
+    const objeto = document.getElementById(contenedorID)
+    objeto.style.display = "none"
+}
+
+function mostrar(contenedorID){
+    const objeto = document.getElementById(contenedorID)
+    objeto.style.display = "flex"
+}
+
+
+function validarCarrito(){
+    const sectorCompra = document.getElementById("sectorCompra")
+
+    carrito.tratamientos.length == 0 ? ocultar("carrito") : mostrar("carrito")
+
+    if(carrito.tratamientos.length == 0) {
+        sectorCompra.style.width = "100%"
     } else {
-        alert(`La opción elegida no es correcta`)
+        sectorCompra.style.width = "70%"
     }
 }
 
-function reservaTurno(cantidad) {
-    let anio = 2023
-    let mes = 0
-    let dia = 0
-    let hora = 0
-
-    for (let i = 0; i < cantidad; i++) {
-        do {
-
-            let input = prompt(`Ingrese el DIA del mes para el tratamiento: \n ${[i + 1]} - ${carrito.masajes[i].nombre} \n [1 - 31]`)
-            dia = parseInt(input);
-
-        } while (isNaN(dia) || !(dia >= 1 && dia <= 31));
-
-        do {
-            let input = prompt(`DIA elegido: ${dia} \n Ingrese el MES para el tratamiento: \n ${[i + 1]} - ${carrito.masajes[i].nombre}
-            [1] - ENERO             [7] - JULIO
-            [2] - FEBRERO          [8] - AGOSTO
-            [3] - MARZO            [9] - SEPTIEMBRE
-            [4] - ABRIL               [10] - OCTUBRE
-            [5] - MAYO              [11] - NOVIEMBRE
-            [6] - JUNIO              [12] - DICIEMBRE `)
-            mes = parseInt(input);
-        } while (isNaN(mes) || !(mes >= 1 && mes <= 12));
-
-        do {
-            let input = prompt(`FECHA: ${dia}/${mes} \n Ingrese la HORA para el tratamiento: \n ${[i + 1]} - ${carrito.masajes[i].nombre} \n
-            [Trabajamos de 9 a 17 horas]`)
-            hora = parseInt(input);
-        } while (isNaN(hora) || !(hora >= 9 && hora <= 17));
-
-        const fechaReserva = new Date(anio, mes-1, dia, hora)
-        carrito.masajes[i].cambiarFecha(fechaReserva)
-        carrito.mensajeTurnos += `El tratamiento  ${[i + 1]} - ${carrito.masajes[i].nombre} sera el día: ${carrito.masajes[i].fecha.getDate()}/${carrito.masajes[i].fecha.getMonth()+1} ${carrito.masajes[i].fecha.getHours()}hs. \n`
-    }
-    alert(carrito.mensajeTurnos)
-}
 
 
-//MAIN//
-
-const nombre = prompt(`Bienvenido a Galatea-Skin.
-        -¿Cómo es tu nombre?`).toUpperCase()
-
-if (nombre != "") {
-    crearTratamientosDesdeArray(tratamientosIniciales)
-    menuPrincipal()
-} else {
-    alert("Gracias por visitar Galatea-Skin")
-}
-
-if (carrito.masajes.length != 0) {
-
-    const nombresTratamientos = carrito.masajes.map(tratamiento => tratamiento.nombre).join("\n")
-
-    carrito.mensajeTratamientos = `${nombre}, has elegido los siguientes tratamientos:\n\n${nombresTratamientos} \n\n Cantidad de tratamientos: ${carrito.masajes.length} \n El total es: $${carrito.cuentaTotal}`
-
-    alert(carrito.mensajeTratamientos)
-    reservaTurno(carrito.masajes.length)
-}
-
-if (carrito.masajes.length != 0) {
-    alert(`${carrito.mensajeTratamientos} \n \n ${carrito.mensajeTurnos} \n \n Agradecemos tu consulta y te esperamos para que disfrutes de nuestro trabajo.`)}
+window.onload = validarCarrito()

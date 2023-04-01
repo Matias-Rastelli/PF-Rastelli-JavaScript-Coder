@@ -50,6 +50,7 @@ main {
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
+      overflow: hidden;
       border: 1px solid black;
       border-radius: 10px;
       width: 95%;
@@ -59,6 +60,7 @@ main {
         margin-left: 10px;
         width: 60px;
         height: 60px;
+        aspect-ratio: 1;
         border: 1px solid black;
         border-radius: 50%;
         background-color: lightcyan; }
@@ -88,7 +90,8 @@ main {
         #carrito #carrito__tratamientos .carrito__tratamientos__item .item__precio__eliminar .item__eliminar {
           color: rgba(255, 0, 0, 0.6);
           margin-top: 10px;
-          margin-right: 10px; }
+          margin-right: 10px;
+          cursor: pointer; }
           #carrito #carrito__tratamientos .carrito__tratamientos__item .item__precio__eliminar .item__eliminar :hover {
             color: red; }
         #carrito #carrito__tratamientos .carrito__tratamientos__item .item__precio__eliminar .item__precio {
@@ -144,42 +147,48 @@ main {
       border-radius: 50%;
       cursor: pointer; }
 
-#cuerpo {
+#sectorCompra {
   display: flex;
   flex-direction: row;
   width: 70%;
   justify-content: space-evenly; }
-  #cuerpo .columna {
+  #sectorCompra .columna {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly; }
-    #cuerpo .columna .listadoTratamientos {
+    #sectorCompra .columna .listadoTratamientos {
+      display: flex;
+      flex-direction: column;
       padding: 2px;
       border: solid 1px black;
-      border-radius: 10px;
-      cursor: pointer; }
-      #cuerpo .columna .listadoTratamientos:hover {
-        background-color: lightskyblue; }
-      #cuerpo .columna .listadoTratamientos h2 {
+      border-radius: 10px; }
+      #sectorCompra .columna .listadoTratamientos h2 {
         border-bottom: 1px solid black;
         text-align: center;
         margin-bottom: 5px;
         margin-inline: 25px; }
-      #cuerpo .columna .listadoTratamientos .contenedorCategoria {
+      #sectorCompra .columna .listadoTratamientos .contenedorCategoria {
         display: flex;
         flex-direction: column;
         gap: 2px; }
-        #cuerpo .columna .listadoTratamientos .contenedorCategoria .itemParaComprar {
+        #sectorCompra .columna .listadoTratamientos .contenedorCategoria .itemParaComprar {
+          position: relative;
           display: flex;
           flex-direction: row;
           align-items: center;
           justify-content: space-between;
-          gap: 10px;
           border: 1px solid black;
           border-radius: 5px;
           margin: 0px 10px;
-          padding: 1px 10px; }
-        #cuerpo .columna .listadoTratamientos .contenedorCategoria .ItemListado {
+          padding: 1px 10px;
+          gap: 10px; }
+          #sectorCompra .columna .listadoTratamientos .contenedorCategoria .itemParaComprar .itemParaComprar__Nombre {
+            width: 300px; }
+          #sectorCompra .columna .listadoTratamientos .contenedorCategoria .itemParaComprar .imgInfo {
+            cursor: pointer; }
+          #sectorCompra .columna .listadoTratamientos .contenedorCategoria .itemParaComprar .imgCarrito {
+            cursor: pointer; }
+        #sectorCompra .columna .listadoTratamientos .contenedorCategoria .ItemListado {
           display: flex;
           flex-direction: row;
           align-items: center;
@@ -187,9 +196,40 @@ main {
           gap: 10px;
           margin: 0px 10px;
           padding: 1px 10px; }
-          #cuerpo .columna .listadoTratamientos .contenedorCategoria .ItemListado .imgInfo, #cuerpo .columna .listadoTratamientos .contenedorCategoria .ItemListado .imgCarrito {
+          #sectorCompra .columna .listadoTratamientos .contenedorCategoria .ItemListado .imgInfo, #sectorCompra .columna .listadoTratamientos .contenedorCategoria .ItemListado .imgCarrito {
             display: none; }
+          #sectorCompra .columna .listadoTratamientos .contenedorCategoria .ItemListado .itemParaComprar__Nombre {
+            width: auto; }
 
 #imgCuerpo {
   max-height: 70vh;
   width: auto; }
+
+.popover {
+  position: absolute;
+  top: -78px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  height: auto;
+  background-color: lightblue;
+  opacity: 1;
+  border: 1px solid black;
+  border-radius: 20px;
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75); }
+  .popover .popoverHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px 10px; }
+    .popover .popoverHeader .cerrarPopover {
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      color: rgba(255, 0, 0, 0.6); }
+      .popover .popoverHeader .cerrarPopover :hover {
+        color: red; }
+  .popover .popoverBody {
+    margin: 5px 10px; }
