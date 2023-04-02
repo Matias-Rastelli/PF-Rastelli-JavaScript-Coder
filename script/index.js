@@ -11,6 +11,7 @@ class Tratamientos {
         this.categoria = categoria
         this.descripcion = descripcion
         this.fecha = new Date()
+        this.img = categoria
     }
 
     agregarCarrito(){
@@ -242,12 +243,15 @@ function crearTratamientosDesdeArray(arrayTratamientos) {
     });
 }
 
-crearTratamientosDesdeArray(tratamientosIniciales)
+function filtrarPorCategoria(arrayTratamientos, categoria) {
+    return arrayTratamientos.filter(elemento => elemento.categoria === categoria);
+}
+
 
 function renderPrinipal(contenedorPrincipal, categoria) {
     
-    const contenedor = contenedorPrincipal
-    const tratamientosFiltrado = tratamientos.filter(elemento => elemento.categoria === categoria)
+    const contenedor = document.getElementById(contenedorPrincipal)
+    const tratamientosFiltrado = filtrarPorCategoria(tratamientos, categoria)
 
     contenedorCategoria = document.createElement("div")
     contenedor.appendChild(contenedorCategoria)
@@ -255,7 +259,7 @@ function renderPrinipal(contenedorPrincipal, categoria) {
 
     tratamientosFiltrado.forEach((tratamiento) => {
         const itemContenedor = document.createElement("div")
-        itemContenedor.classList.add("ItemListado")
+        itemContenedor.classList.add("item", "itemListado")
         itemContenedor.innerHTML = ` 
             <p class="itemParaComprar__Nombre">${tratamiento.nombre}</p>
             <img src="./assets/img/info.png" alt="info tratamiento" class="imgInfo">
@@ -267,7 +271,7 @@ function renderPrinipal(contenedorPrincipal, categoria) {
         imgCarrito.addEventListener("click", () => {
             tratamiento.agregarCarrito()
             carrito.cuentaTotal += tratamiento.precio
-            itemContenedor.style.backgroundColor = "red";
+            // evento que muestre que se agrego
             renderCarrito()
             validarCarrito()
         })
@@ -275,10 +279,7 @@ function renderPrinipal(contenedorPrincipal, categoria) {
         const imgInfo = itemContenedor.querySelector(".imgInfo");
         imgInfo.addEventListener("click", () => {
             
-            const popoverActivo = document.querySelector(".popoverActivo")
-            if (popoverActivo) {
-                popoverActivo.remove()
-            }
+            popoverActivo()
 
             const popover = document.createElement("div")
             popover.classList.add("popover", "popoverActivo")
@@ -295,7 +296,6 @@ function renderPrinipal(contenedorPrincipal, categoria) {
                     <p>${tratamiento.descripcion}</p>
                 </div>
                 `
-
             itemContenedor.appendChild(popover)
 
             const cerrarPopover = popover.querySelector(".cerrarPopover")
@@ -308,13 +308,12 @@ function renderPrinipal(contenedorPrincipal, categoria) {
     })
 }
 
-
-
-renderPrinipal((document.getElementById("contenedorCabeza")), "cabeza")
-renderPrinipal((document.getElementById("contenedorManos")), "manos")
-renderPrinipal((document.getElementById("contenedorCuerpo")), "cuerpo")
-renderPrinipal((document.getElementById("contenedorPies")), "pies")
-
+function popoverActivo() {
+    const popoverActivo = document.querySelector(".popoverActivo")
+    if (popoverActivo) {
+        popoverActivo.remove()
+    }
+}
 
 function renderCarrito(){
     const carritoTratamientos = document.getElementById("carrito__tratamientos")
@@ -370,15 +369,26 @@ function total(){
 }
 
 
-function cambiarClase (contenedor){
-    const contenedorPrincipal = document.getElementById(contenedor)
-    const listadoTratamientos = contenedorPrincipal.querySelector(".contenedorCategoria")
-    const ItemListado = listadoTratamientos.querySelectorAll(".ItemListado")
-    
-    ItemListado.forEach((elemento) =>{
-        elemento.classList.remove("ItemListado")
-        elemento.classList.add("itemParaComprar")
-    })
+function estiloModoCompra(contenedor) {
+    const contenedorPrincipal = document.getElementById(contenedor);
+    const listadoTratamientos = contenedorPrincipal.querySelector(".contenedorCategoria");
+    const itemListado = listadoTratamientos.querySelectorAll(".item");
+
+    itemListado.forEach((elemento) => {
+        elemento.classList.remove("itemListado");
+        elemento.classList.add("itemParaComprar");
+    });
+}
+
+function estiloModoListado(contenedor) {
+    const contenedorPrincipal = document.getElementById(contenedor);
+    const listadoTratamientos = contenedorPrincipal.querySelector(".contenedorCategoria");
+    const itemListado = listadoTratamientos.querySelectorAll(".item");
+
+    itemListado.forEach((elemento) => {
+        elemento.classList.add("itemListado");
+        elemento.classList.remove("itemParaComprar");
+    });
 }
 
 function ocultar(contenedorID){
@@ -395,15 +405,106 @@ function mostrar(contenedorID){
 function validarCarrito(){
     const sectorCompra = document.getElementById("sectorCompra")
 
-    carrito.tratamientos.length == 0 ? ocultar("carrito") : mostrar("carrito")
-
     if(carrito.tratamientos.length == 0) {
         sectorCompra.style.width = "100%"
+        ocultar("carrito")
     } else {
+        mostrar("carrito")
         sectorCompra.style.width = "70%"
     }
 }
 
+function hover (parteCuerpoID, listadoID) {
+    
+    const parte = document.getElementById(parteCuerpoID)
+    const contenedor = document.getElementById(listadoID)
+
+        function hoverBody () {
+            parte.style.filter = "brightness(3)"
+            contenedor.style.backgroundColor = "lightblue"
+        }
+
+        function hoverOutBody(){
+            parte.style.removeProperty("filter")
+            contenedor.style.backgroundColor = ""
+        }
+
+        parte.addEventListener("mouseover", hoverBody)    
+        parte.addEventListener("mouseout", hoverOutBody)    
+        contenedor.addEventListener("mouseover", hoverBody)    
+        contenedor.addEventListener("mouseout", hoverOutBody)
+}
+
+function clickParaModoCompra(contenedorVisibleID, ParteCuerpoClick, ocultar1ID, ocultar2ID, ocultar3ID) {
+    const visible = document.getElementById(contenedorVisibleID);
+    const visibleCuerpo = document.getElementById(ParteCuerpoClick);
 
 
-window.onload = validarCarrito()
+
+    function modoCompraEstilos() {
+        btnModoCompleto.style.display = "flex"
+        estiloModoCompra(contenedorVisibleID)
+        mostrar(contenedorVisibleID)
+        ocultar(ocultar1ID)
+        ocultar(ocultar2ID)
+        ocultar(ocultar3ID)
+        // eliminar evento Hover
+        // agrandar cuerpo o zoom zona
+    }
+
+    visible.addEventListener("click", modoCompraEstilos)
+    visibleCuerpo.addEventListener("click", modoCompraEstilos)
+}
+
+const btnModoCompleto = document.getElementById("boton-volver")
+btnModoCompleto.addEventListener("click", modoCompleto)
+
+function modoCompleto(){
+
+    btnModoCompleto.style.display = "none"
+
+    popoverActivo()
+
+    mostrar("contenedorCabeza")
+    mostrar("contenedorManos")
+    mostrar("contenedorCuerpo")   
+    mostrar("contenedorPies")
+    
+    estiloModoListado("contenedorCabeza")
+    estiloModoListado("contenedorManos")
+    estiloModoListado("contenedorCuerpo")   
+    estiloModoListado("contenedorPies")    
+
+    clickParaModoCompra("contenedorCabeza", "imgCuerpoCabeza", "contenedorManos", "contenedorCuerpo", "contenedorPies")
+    clickParaModoCompra("contenedorManos", "imgCuerpoManos", "contenedorCabeza" , "contenedorCuerpo", "contenedorPies")
+    clickParaModoCompra("contenedorCuerpo", "imgCuerpoCuerpo", "contenedorManos", "contenedorCabeza", "contenedorPies")
+    clickParaModoCompra("contenedorPies", "imgCuerpoPies", "contenedorManos", "contenedorCuerpo", "contenedorCabeza")
+}
+
+
+
+
+window.onload = funcionesIniciales()
+
+function funcionesIniciales(){
+
+    crearTratamientosDesdeArray(tratamientosIniciales)
+
+    renderPrinipal("contenedorCabeza", "cabeza")
+    renderPrinipal("contenedorManos", "manos")
+    renderPrinipal("contenedorCuerpo", "cuerpo")
+    renderPrinipal("contenedorPies", "pies")
+    
+    hover("imgCuerpoCabeza", "contenedorCabeza")
+    hover("imgCuerpoCuerpo", "contenedorCuerpo")
+    hover("imgCuerpoPies", "contenedorPies")
+    hover("imgCuerpoManos", "contenedorManos")
+    
+    validarCarrito()
+
+    clickParaModoCompra("contenedorCabeza", "imgCuerpoCabeza", "contenedorManos", "contenedorCuerpo", "contenedorPies")
+    clickParaModoCompra("contenedorManos", "imgCuerpoManos", "contenedorCabeza" , "contenedorCuerpo", "contenedorPies")
+    clickParaModoCompra("contenedorCuerpo", "imgCuerpoCuerpo", "contenedorManos", "contenedorCabeza", "contenedorPies")
+    clickParaModoCompra("contenedorPies", "imgCuerpoPies", "contenedorManos", "contenedorCuerpo", "contenedorCabeza")
+
+}

@@ -1,7 +1,8 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  user-select: none; }
 
 body {
   display: flex;
@@ -24,7 +25,7 @@ main {
   min-height: 75vh; }
 
 #carrito {
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
@@ -148,11 +149,28 @@ main {
       cursor: pointer; }
 
 #sectorCompra {
+  position: relative;
   display: flex;
   flex-direction: row;
   width: 70%;
   justify-content: space-evenly; }
+  #sectorCompra .boton-volver {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    position: absolute;
+    top: 10px;
+    left: 100px;
+    cursor: pointer;
+    width: 200px;
+    height: 40px;
+    z-index: 10; }
+    #sectorCompra .boton-volver p {
+      font-weight: bolder; }
+    #sectorCompra .boton-volver:hover {
+      background-color: lightblue; }
   #sectorCompra .columna {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly; }
@@ -188,22 +206,43 @@ main {
             cursor: pointer; }
           #sectorCompra .columna .listadoTratamientos .contenedorCategoria .itemParaComprar .imgCarrito {
             cursor: pointer; }
-        #sectorCompra .columna .listadoTratamientos .contenedorCategoria .ItemListado {
+        #sectorCompra .columna .listadoTratamientos .contenedorCategoria .itemListado {
           display: flex;
           flex-direction: row;
           align-items: center;
           justify-content: space-between;
           gap: 10px;
           margin: 0px 10px;
-          padding: 1px 10px; }
-          #sectorCompra .columna .listadoTratamientos .contenedorCategoria .ItemListado .imgInfo, #sectorCompra .columna .listadoTratamientos .contenedorCategoria .ItemListado .imgCarrito {
+          padding: 1px 10px;
+          cursor: pointer; }
+          #sectorCompra .columna .listadoTratamientos .contenedorCategoria .itemListado .imgInfo, #sectorCompra .columna .listadoTratamientos .contenedorCategoria .itemListado .imgCarrito {
             display: none; }
-          #sectorCompra .columna .listadoTratamientos .contenedorCategoria .ItemListado .itemParaComprar__Nombre {
+          #sectorCompra .columna .listadoTratamientos .contenedorCategoria .itemListado .itemParaComprar__Nombre {
             width: auto; }
 
-#imgCuerpo {
-  max-height: 70vh;
-  width: auto; }
+.cuerpoCompleto {
+  height: 100%;
+  width: 300px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer; }
+  .cuerpoCompleto .parteCuerpo {
+    height: 500px;
+    width: auto; }
+  .cuerpoCompleto #imgCuerpoCabeza {
+    clip-path: polygon(0 0, 100% 0, 100% 21%, 0 21%);
+    position: absolute; }
+  .cuerpoCompleto #imgCuerpoCuerpo {
+    clip-path: polygon(100% 81%, 100% 48%, 66% 48%, 66% 20%, 0 20%, 0 81%);
+    position: absolute; }
+  .cuerpoCompleto #imgCuerpoPies {
+    clip-path: polygon(0 80%, 100% 80%, 100% 100%, 0 100%);
+    position: absolute; }
+  .cuerpoCompleto #imgCuerpoManos {
+    clip-path: polygon(63% 20%, 100% 20%, 100% 51%, 63% 43%);
+    position: absolute; }
 
 .popover {
   position: absolute;

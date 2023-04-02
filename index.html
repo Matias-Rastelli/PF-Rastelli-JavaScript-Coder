@@ -28,22 +28,32 @@
         </section>
 
         <section id="sectorCompra">
+            <div class="boton-volver" id="boton-volver">
+                <img src="./assets/img/carrito.png" alt="volver modo completo">
+                <p>Volver a vista cuerpo completo</p>
+            </div>
             <div class="columna">
-                <div class="listadoTratamientos" id="contenedorCabeza">
+                <div class="listadoTratamientos parteCuerpoCabeza" id="contenedorCabeza">
                     <h2>Tratamientos en la Cabeza</h2>
                 </div>
-                <div class="listadoTratamientos"  id="contenedorManos">
+                <div class="listadoTratamientos parteCuerpoManos"  id="contenedorManos">
                     <h2>Tratamientos en las Manos</h2>
                 </div>
             </div>
             <div class="columna">
-                <img src="./assets/img/cuerpo.png" alt="Cuerpo Completo" id="imgCuerpo">
+                <div class="cuerpoCompleto">
+                    <img src="./assets/img/cuerpo.png" alt="Cuerpo Completo" class="parteCuerpo parteCuerpoCabeza" id="imgCuerpoCabeza">
+                    <img src="./assets/img/cuerpo.png" alt="Cuerpo Completo" class="parteCuerpo parteCuerpoCuerpo" id="imgCuerpoCuerpo">
+                    <img src="./assets/img/cuerpo.png" alt="Cuerpo Completo" class="parteCuerpo parteCuerpoPies" id="imgCuerpoPies">
+                    <img src="./assets/img/cuerpo.png" alt="Cuerpo Completo" class="parteCuerpo parteCuerpoManos" id="imgCuerpoManos">
+                </div>
+                
             </div>
             <div class="columna">
-                <div class="listadoTratamientos" id="contenedorCuerpo">
+                <div class="listadoTratamientos parteCuerpoCuerpo" id="contenedorCuerpo">
                     <h2>Tratamientos en el Cuerpo</h2>
                 </div>
-                <div class="listadoTratamientos" id="contenedorPies">
+                <div class="listadoTratamientos parteCuerpoPies" id="contenedorPies">
                     <h2>Tratamientos en los Pies</h2>
                 </div>
             </div>
