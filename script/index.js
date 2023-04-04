@@ -1,7 +1,14 @@
 // simulador de pago y reserva de turnos de estetica //
 
-const carrito = {cuentaTotal: 0, tratamientos: []}
 const tratamientos = []
+const carrito = {
+    cuenta: {
+        subtotal: 0,
+        descuento: 0,
+        total: 0
+    }, 
+    tratamientos: []
+}
 
 class Tratamientos {
     constructor(nombre, precio, categoria, descripcion) {
@@ -248,7 +255,7 @@ function filtrarPorCategoria(arrayTratamientos, categoria) {
 }
 
 
-function renderPrinipal(contenedorPrincipal, categoria) {
+function renderPrincipal(contenedorPrincipal, categoria) {
     
     const contenedor = document.getElementById(contenedorPrincipal)
     const tratamientosFiltrado = filtrarPorCategoria(tratamientos, categoria)
@@ -270,8 +277,8 @@ function renderPrinipal(contenedorPrincipal, categoria) {
         const imgCarrito = itemContenedor.querySelector(".imgCarrito");
         imgCarrito.addEventListener("click", () => {
             tratamiento.agregarCarrito()
-            carrito.cuentaTotal += tratamiento.precio
-            // evento que muestre que se agrego
+            carrito.cuenta.subtotal += tratamiento.precio
+            // evento que muestre modal que se agrego al carrito
             renderCarrito()
             validarCarrito()
         })
@@ -310,9 +317,7 @@ function renderPrinipal(contenedorPrincipal, categoria) {
 
 function popoverActivo() {
     const popoverActivo = document.querySelector(".popoverActivo")
-    if (popoverActivo) {
-        popoverActivo.remove()
-    }
+    popoverActivo ? popoverActivo.remove() : null
 }
 
 function renderCarrito(){
@@ -321,9 +326,9 @@ function renderCarrito(){
     carritoTratamientos.innerHTML = ""
 
     carrito.tratamientos.forEach((tratamiento) => {
-        if (tratamiento.nombre.length > 28) {
-            tratamiento.nombre = tratamiento.nombre.substring(0, 26) + '..';
-        }
+
+        tratamiento.nombre.length > 28 ? tratamiento.nombre = tratamiento.nombre.substring(0, 26) + `..` : tratamiento.nombre
+
         const divItem = document.createElement("div")
         divItem.classList.add("carrito__tratamientos__item")
         divItem.innerHTML = `
@@ -353,19 +358,59 @@ function renderCarrito(){
         eliminar.addEventListener("click", () => {
             const index = carrito.tratamientos.indexOf(tratamiento)
             carrito.tratamientos.splice(index, 1)
-            carrito.cuentaTotal -= tratamiento.precio
-            total()
+            carrito.cuenta.subtotal -= tratamiento.precio
+            aplicarCupon()
             renderCarrito()
             validarCarrito()
         })
-        total()
+        aplicarCupon()
         carritoTratamientos.appendChild(divItem)
     })
 }
 
+// Permitir que solo se aplique un descuento por carrito
+// se puede hacer haciendo que cuentaTotal sea un objeto, que tenga subtotal donde los tratamientos van sumando
+//Subtota, Cupon, Total, > 
+// vinculando el cupon con el subtotal para dar el total
+
+
 function total(){
     const total = document.getElementById("total")
-    total.textContent = `Total: $${carrito.cuentaTotal}`
+    carrito.cuenta.total = carrito.cuenta.subtotal - carrito.cuenta.descuento
+    total.innerHTML = `
+    <p class = "subtotal">Subtotal: $${carrito.cuenta.subtotal}</p>
+    <p class = "descuento">Descuento: $${carrito.cuenta.descuento}</p>
+    <p class = "total">Total: $${carrito.cuenta.total}</p>
+    `
+}
+
+const cupones = [
+    {key: "cupon10", value:0.10},
+    {key: "cupon20", value:0.20},
+    {key: "cupon50", value:0.50},
+    {key: "cupon100", value:1}
+]
+
+const btnCupon = document.getElementById("btnCupon")
+const inputCupon = document.getElementById("cupon")
+btnCupon.addEventListener("click", aplicarCupon)
+
+function aplicarCupon(){
+    const index = cupones.findIndex((cupon) => cupon.key === inputCupon.value)
+    index != -1 ? cuponValido() : cuponInvalido()
+    //eliminar cupon del array para no volver a utilizarlo
+    function cuponValido(){
+        inputCupon.style.border = "1px green solid"
+        carrito.cuenta.descuento = carrito.cuenta.subtotal * cupones[index].value
+        total()
+    }
+
+    function cuponInvalido(){
+        inputCupon.value === "" ? inputCupon.style.border = "1px yellow solid" : inputCupon.style.border = "1px red solid"
+        carrito.cuenta.descuento = 0
+        carrito.cuenta.total = carrito.cuenta.subtotal
+        total()
+    }
 }
 
 
@@ -405,13 +450,9 @@ function mostrar(contenedorID){
 function validarCarrito(){
     const sectorCompra = document.getElementById("sectorCompra")
 
-    if(carrito.tratamientos.length == 0) {
-        sectorCompra.style.width = "100%"
-        ocultar("carrito")
-    } else {
-        mostrar("carrito")
-        sectorCompra.style.width = "70%"
-    }
+    carrito.tratamientos.length == 0 ? 
+    (sectorCompra.style.width = "100%", ocultar("carrito"), inputCupon.value = "") :
+    (sectorCompra.style.width = "70%", mostrar("carrito"))
 }
 
 function hover (parteCuerpoID, listadoID) {
@@ -438,8 +479,6 @@ function hover (parteCuerpoID, listadoID) {
 function clickParaModoCompra(contenedorVisibleID, ParteCuerpoClick, ocultar1ID, ocultar2ID, ocultar3ID) {
     const visible = document.getElementById(contenedorVisibleID);
     const visibleCuerpo = document.getElementById(ParteCuerpoClick);
-
-
 
     function modoCompraEstilos() {
         btnModoCompleto.style.display = "flex"
@@ -481,6 +520,20 @@ function modoCompleto(){
     clickParaModoCompra("contenedorPies", "imgCuerpoPies", "contenedorManos", "contenedorCuerpo", "contenedorCabeza")
 }
 
+const btnPagar = document.getElementById("btnPagar")
+btnPagar.addEventListener("click", pagar)
+function pagar(){
+    
+    alert(`Pagaste tus tratamientos: total $${carrito.cuenta.total}`) //reemplazar por pantalla de pago
+    
+    carrito.tratamientos = []
+    carrito.cuenta.subtotal = 0
+    total()
+    renderCarrito()
+    validarCarrito()
+    modoCompleto()
+}
+
 
 
 
@@ -490,10 +543,10 @@ function funcionesIniciales(){
 
     crearTratamientosDesdeArray(tratamientosIniciales)
 
-    renderPrinipal("contenedorCabeza", "cabeza")
-    renderPrinipal("contenedorManos", "manos")
-    renderPrinipal("contenedorCuerpo", "cuerpo")
-    renderPrinipal("contenedorPies", "pies")
+    renderPrincipal("contenedorCabeza", "cabeza")
+    renderPrincipal("contenedorManos", "manos")
+    renderPrincipal("contenedorCuerpo", "cuerpo")
+    renderPrincipal("contenedorPies", "pies")
     
     hover("imgCuerpoCabeza", "contenedorCabeza")
     hover("imgCuerpoCuerpo", "contenedorCuerpo")

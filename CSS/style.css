@@ -100,15 +100,20 @@ main {
           margin-bottom: 5px;
           font-size: 30px; }
   #carrito #infoTotal {
+    width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center; }
-    #carrito #infoTotal #total {
-      display: inline-block;
-      margin: 20px;
-      text-shadow: 4px 4px 7px rgba(0, 0, 0, 0.6);
+    #carrito #infoTotal #total .subtotal {
+      font-size: x-large;
+      color: blue; }
+    #carrito #infoTotal #total .descuento {
+      font-size: medium;
+      color: green; }
+    #carrito #infoTotal #total .total {
+      font-weight: bolder;
       font-size: xx-large;
-      font-weight: bolder; }
+      color: red; }
     #carrito #infoTotal #btnPagar {
       width: 100px;
       height: 40px;

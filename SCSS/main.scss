@@ -131,17 +131,26 @@ main{
     }
 
     #infoTotal{
-        
+        width: 100%;
         display: flex;
-        justify-content: center;
+        justify-content: space-evenly;
         align-items: center;
 
         #total{
-            display: inline-block;
-            margin: 20px;
-            text-shadow: 4px 4px 7px rgba(0,0,0,0.6);
-            font-size: xx-large;
-            font-weight: bolder;
+            .subtotal{
+                font-size: x-large;
+                color: blue
+            }
+            .descuento{
+                font-size: medium;
+                color: green;
+            }
+            .total{
+                font-weight: bolder;
+                font-size: xx-large;
+                color: red;
+            }
+            
             }
     
             #btnPagar {
