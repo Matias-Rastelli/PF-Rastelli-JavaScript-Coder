@@ -277,3 +277,116 @@ main {
         color: red; }
   .popover .popoverBody {
     margin: 5px 10px; }
+
+#modal {
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(3px);
+  background-color: unset;
+  border: none; }
+
+.cuerpoModal {
+  position: fixed;
+  top: 20%;
+  left: 25%;
+  width: 50vw;
+  height: 50vh;
+  border: 2px solid black;
+  border-radius: 20px;
+  box-shadow: 4px 4px 15px 5px grey;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: lightsalmon;
+  padding: 15px; }
+  .cuerpoModal .modal__header {
+    border-bottom: 0.5px solid black;
+    padding-bottom: 10px; }
+    .cuerpoModal .modal__header h2 {
+      text-align: center; }
+  .cuerpoModal .modal__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    overflow-y: auto;
+    overflow-x: hidden; }
+    .cuerpoModal .modal__body .modal__body__tratamientos {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center; }
+      .cuerpoModal .modal__body .modal__body__tratamientos .tratamiento__modal {
+        width: 70%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 50px;
+        font-size: medium;
+        border-bottom: 0.5px black solid;
+        padding-top: 5px; }
+        .cuerpoModal .modal__body .modal__body__tratamientos .tratamiento__modal span {
+          width: 50%; }
+        .cuerpoModal .modal__body .modal__body__tratamientos .tratamiento__modal .tratamiento__modal__nombre {
+          text-align: right; }
+        .cuerpoModal .modal__body .modal__body__tratamientos .tratamiento__modal .tratamiento__modal__fecha {
+          text-align: left; }
+  .cuerpoModal .modal__footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 40px;
+    align-items: center;
+    border-top: 0.5px solid black;
+    padding-top: 10px; }
+    .cuerpoModal .modal__footer .modal__footer__totales {
+      display: flex;
+      flex-direction: column;
+      align-items: center; }
+      .cuerpoModal .modal__footer .modal__footer__totales .modal__footer__totales__subtotal {
+        font-size: large;
+        color: blue; }
+      .cuerpoModal .modal__footer .modal__footer__totales .modal__footer__totales__descuento {
+        font-size: medium;
+        color: green; }
+      .cuerpoModal .modal__footer .modal__footer__totales .modal__footer__totales__total {
+        font-weight: bolder;
+        font-size: x-large;
+        color: red; }
+    .cuerpoModal .modal__footer #pagar {
+      width: 150px;
+      height: 40px;
+      cursor: pointer;
+      box-shadow: inset 0px 1px 0px 0px #f29c93;
+      background-color: red;
+      border-radius: 6px;
+      border: 1px solid black;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: bold;
+      text-decoration: none;
+      text-shadow: 0px 1px 0px #b23e35; }
+      .cuerpoModal .modal__footer #pagar:active {
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3), 0 3px 7px rgba(0, 0, 0, 0.3); }
+      .cuerpoModal .modal__footer #pagar:hover {
+        background-color: #ffffff;
+        color: red; }
+    .cuerpoModal .modal__footer #cancelar {
+      width: 150px;
+      height: 40px;
+      cursor: pointer;
+      box-shadow: inset 0px 1px 0px 0px #93f2ae;
+      background-color: green;
+      border-radius: 6px;
+      border: 1px solid black;
+      display: inline-block;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: bold;
+      text-decoration: none;
+      text-shadow: 0px 1px 0px #93f2ae; }
+      .cuerpoModal .modal__footer #cancelar:active {
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3), 0 3px 7px rgba(0, 0, 0, 0.3); }
+      .cuerpoModal .modal__footer #cancelar:hover {
+        background-color: #ffffff;
+        color: green; }

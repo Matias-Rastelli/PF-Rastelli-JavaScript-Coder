@@ -1,14 +1,7 @@
 // simulador de pago y reserva de turnos de estetica //
 
 const tratamientos = []
-const carrito = {
-    cuenta: {
-        subtotal: 0,
-        descuento: 0,
-        total: 0
-    }, 
-    tratamientos: []
-}
+const carrito = JSON.parse(localStorage.getItem('carrito')) || { cuenta: { subtotal: 0, descuento: 0, total: 0 }, tratamientos: [] };
 
 class Tratamientos {
     constructor(nombre, precio, categoria, descripcion) {
@@ -256,7 +249,7 @@ function filtrarPorCategoria(arrayTratamientos, categoria) {
 
 
 function renderPrincipal(contenedorPrincipal, categoria) {
-    
+
     const contenedor = document.getElementById(contenedorPrincipal)
     const tratamientosFiltrado = filtrarPorCategoria(tratamientos, categoria)
 
@@ -448,6 +441,8 @@ function mostrar(contenedorID){
 
 
 function validarCarrito(){
+
+    localStorage.setItem("carrito", JSON.stringify(carrito))
     const sectorCompra = document.getElementById("sectorCompra")
 
     carrito.tratamientos.length == 0 ? 
@@ -520,44 +515,76 @@ function modoCompleto(){
     clickParaModoCompra("contenedorPies", "imgCuerpoPies", "contenedorManos", "contenedorCuerpo", "contenedorCabeza")
 }
 
+
 const btnPagar = document.getElementById("btnPagar")
-btnPagar.addEventListener("click", pagar)
-function pagar(){
-    
-    alert(`Pagaste tus tratamientos: total $${carrito.cuenta.total}`) //reemplazar por pantalla de pago
-    
-    carrito.tratamientos = []
-    carrito.cuenta.subtotal = 0
-    total()
-    renderCarrito()
-    validarCarrito()
-    modoCompleto()
+btnPagar.addEventListener("click", () => {
+
+    const modalBodyTratamientos = document.querySelector(".modal__body__tratamientos")
+
+    carrito.tratamientos.forEach((tratamiento) =>{
+
+        const tratamientoModal = document.createElement("div")
+        tratamientoModal.classList = "tratamiento__modal"
+        tratamientoModal.innerHTML = `
+            <div class="tratamiento__modal">
+                <span class="tratamiento__modal__nombre" >${tratamiento.nombre} </span>
+                <span class="tratamiento__modal__fecha"> ${tratamiento.fecha} </span>
+            </div>
+            `
+            modalBodyTratamientos.appendChild(tratamientoModal)
+        renderPreciosModal()
+        modal.close()
+        modal.showModal()
+    })
+})
+
+function renderPreciosModal() {
+    const subtotal = document.querySelector(".modal__footer__totales__subtotal")
+    const descuento = document.querySelector(".modal__footer__totales__descuento")
+    const total = document.querySelector(".modal__footer__totales__total")
+
+    subtotal.innerHTML = `Subtotal: $${carrito.cuenta.subtotal}`
+    descuento.innerHTML = `Descuento: $${carrito.cuenta.descuento}`
+    total.innerHTML = `Total: $${carrito.cuenta.total}`
 }
 
+const modal = document.querySelector("#modal");
+const pagar = document.querySelector("#pagar");
+const cancelar = document.querySelector("#cancelar");
 
-
+pagar.addEventListener('click', () => {
+    carrito.tratamientos = []
+    carrito.cuenta.subtotal = 0
+    localStorage.clear()
+    modal.close()
+    validarCarrito()
+    location.reload();
+});
+cancelar.addEventListener('click', () => {
+    modal.close();
+});
 
 window.onload = funcionesIniciales()
 
 function funcionesIniciales(){
 
+    renderCarrito()
+    validarCarrito()
+    
     crearTratamientosDesdeArray(tratamientosIniciales)
 
     renderPrincipal("contenedorCabeza", "cabeza")
     renderPrincipal("contenedorManos", "manos")
     renderPrincipal("contenedorCuerpo", "cuerpo")
     renderPrincipal("contenedorPies", "pies")
-    
+
     hover("imgCuerpoCabeza", "contenedorCabeza")
     hover("imgCuerpoCuerpo", "contenedorCuerpo")
     hover("imgCuerpoPies", "contenedorPies")
     hover("imgCuerpoManos", "contenedorManos")
-    
-    validarCarrito()
 
     clickParaModoCompra("contenedorCabeza", "imgCuerpoCabeza", "contenedorManos", "contenedorCuerpo", "contenedorPies")
     clickParaModoCompra("contenedorManos", "imgCuerpoManos", "contenedorCabeza" , "contenedorCuerpo", "contenedorPies")
     clickParaModoCompra("contenedorCuerpo", "imgCuerpoCuerpo", "contenedorManos", "contenedorCabeza", "contenedorPies")
     clickParaModoCompra("contenedorPies", "imgCuerpoPies", "contenedorManos", "contenedorCuerpo", "contenedorCabeza")
-
 }
