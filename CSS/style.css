@@ -4,6 +4,34 @@
   box-sizing: border-box;
   user-select: none; }
 
+header {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center; }
+  header #btnAdministrador {
+    cursor: pointer;
+    position: absolute;
+    right: 10px; }
+  header h1 {
+    font-size: xx-large;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; }
+
+footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center; }
+  footer .redesSociales {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 300px; }
+    footer .redesSociales img {
+      width: 30px;
+      aspect-ratio: 1; }
+
 body {
   display: flex;
   flex-direction: column;
@@ -63,8 +91,11 @@ main {
         height: 60px;
         aspect-ratio: 1;
         border: 1px solid black;
-        border-radius: 50%;
-        background-color: lightcyan; }
+        border-radius: 30%;
+        overflow: hidden; }
+        #carrito #carrito__tratamientos .carrito__tratamientos__item .item__tipo__tratamiento img {
+          width: 100%;
+          height: auto; }
       #carrito #carrito__tratamientos .carrito__tratamientos__item .item__info {
         display: flex;
         flex-direction: column; }
@@ -167,9 +198,12 @@ main {
     top: 10px;
     left: 100px;
     cursor: pointer;
-    width: 200px;
+    width: 300px;
     height: 40px;
     z-index: 10; }
+    #sectorCompra .boton-volver img {
+      height: 40px;
+      width: auto; }
     #sectorCompra .boton-volver p {
       font-weight: bolder; }
     #sectorCompra .boton-volver:hover {
@@ -209,8 +243,12 @@ main {
             width: 300px; }
           #sectorCompra .columna .listadoTratamientos .contenedorCategoria .itemParaComprar .imgInfo {
             cursor: pointer; }
+            #sectorCompra .columna .listadoTratamientos .contenedorCategoria .itemParaComprar .imgInfo:hover {
+              filter: drop-shadow(0px 0px 2px blue); }
           #sectorCompra .columna .listadoTratamientos .contenedorCategoria .itemParaComprar .imgCarrito {
             cursor: pointer; }
+            #sectorCompra .columna .listadoTratamientos .contenedorCategoria .itemParaComprar .imgCarrito:hover {
+              filter: drop-shadow(0px 0px 2px red); }
         #sectorCompra .columna .listadoTratamientos .contenedorCategoria .itemListado {
           display: flex;
           flex-direction: row;
@@ -257,7 +295,7 @@ main {
   flex-direction: column;
   width: 400px;
   height: auto;
-  background-color: lightblue;
+  background-color: #40aed3;
   opacity: 1;
   border: 1px solid black;
   border-radius: 20px;
@@ -390,3 +428,48 @@ main {
       .cuerpoModal .modal__footer #cancelar:hover {
         background-color: #ffffff;
         color: green; }
+
+table.body-tabla {
+  border: 2px solid #A40808;
+  background-color: #EEE7DB;
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+  margin: 50px; }
+
+table.body-tabla td,
+table.body-tabla th {
+  border: 1px solid #AAAAAA;
+  padding: 3px 2px; }
+
+table.body-tabla tbody td {
+  font-size: 13px; }
+
+table.body-tabla tr:nth-child(even) {
+  background: #F5C8BF; }
+
+table.body-tabla thead {
+  background: #A40808; }
+
+table.body-tabla thead th {
+  font-size: 19px;
+  font-weight: bold;
+  color: #FFFFFF;
+  text-align: center;
+  border-left: 2px solid #A40808; }
+
+table.body-tabla thead th:first-child {
+  border-left: none; }
+
+table.body-tabla tfoot td {
+  font-size: 13px; }
+
+table.body-tabla tfoot .links {
+  text-align: right; }
+
+table.body-tabla tfoot .links a {
+  display: inline-block;
+  background: #FFFFFF;
+  color: #A40808;
+  padding: 2px 8px;
+  border-radius: 5px; }

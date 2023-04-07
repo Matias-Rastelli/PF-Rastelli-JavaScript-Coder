@@ -3,6 +3,8 @@
 const tratamientos = []
 const carrito = JSON.parse(localStorage.getItem('carrito')) || { cuenta: { subtotal: 0, descuento: 0, total: 0 }, tratamientos: [] };
 
+
+
 class Tratamientos {
     constructor(nombre, precio, categoria, descripcion) {
         this.id = tratamientos.length + 1
@@ -11,7 +13,7 @@ class Tratamientos {
         this.categoria = categoria
         this.descripcion = descripcion
         this.fecha = new Date()
-        this.img = categoria
+        this.img = `./assets/img/${categoria}.png`
     }
 
     agregarCarrito(){
@@ -271,7 +273,7 @@ function renderPrincipal(contenedorPrincipal, categoria) {
         imgCarrito.addEventListener("click", () => {
             tratamiento.agregarCarrito()
             carrito.cuenta.subtotal += tratamiento.precio
-            // evento que muestre modal que se agrego al carrito
+            // funcion que muestre toast que se agrego al carrito
             renderCarrito()
             validarCarrito()
         })
@@ -326,6 +328,7 @@ function renderCarrito(){
         divItem.classList.add("carrito__tratamientos__item")
         divItem.innerHTML = `
             <div class="item__tipo__tratamiento">
+                <img src="${tratamiento.img}" alt="${tratamiento.categoria}">
             </div>
             <div class="item__info">
                 <p class="item__nombre">${tratamiento.nombre}</p>
@@ -361,12 +364,6 @@ function renderCarrito(){
     })
 }
 
-// Permitir que solo se aplique un descuento por carrito
-// se puede hacer haciendo que cuentaTotal sea un objeto, que tenga subtotal donde los tratamientos van sumando
-//Subtota, Cupon, Total, > 
-// vinculando el cupon con el subtotal para dar el total
-
-
 function total(){
     const total = document.getElementById("total")
     carrito.cuenta.total = carrito.cuenta.subtotal - carrito.cuenta.descuento
@@ -391,7 +388,7 @@ btnCupon.addEventListener("click", aplicarCupon)
 function aplicarCupon(){
     const index = cupones.findIndex((cupon) => cupon.key === inputCupon.value)
     index != -1 ? cuponValido() : cuponInvalido()
-    //eliminar cupon del array para no volver a utilizarlo
+
     function cuponValido(){
         inputCupon.style.border = "1px green solid"
         carrito.cuenta.descuento = carrito.cuenta.subtotal * cupones[index].value
@@ -445,9 +442,13 @@ function validarCarrito(){
     localStorage.setItem("carrito", JSON.stringify(carrito))
     const sectorCompra = document.getElementById("sectorCompra")
 
-    carrito.tratamientos.length == 0 ? 
-    (sectorCompra.style.width = "100%", ocultar("carrito"), inputCupon.value = "") :
-    (sectorCompra.style.width = "70%", mostrar("carrito"))
+    if(carrito.tratamientos.length == 0){
+        sectorCompra.style.width = "100%"
+        ocultar("carrito")
+        inputCupon.value = ""
+    } else {
+        sectorCompra.style.width = "70%", mostrar("carrito")
+    }
 }
 
 function hover (parteCuerpoID, listadoID) {
@@ -476,26 +477,24 @@ function clickParaModoCompra(contenedorVisibleID, ParteCuerpoClick, ocultar1ID, 
     const visibleCuerpo = document.getElementById(ParteCuerpoClick);
 
     function modoCompraEstilos() {
-        btnModoCompleto.style.display = "flex"
+        mostrar("boton-volver")
         estiloModoCompra(contenedorVisibleID)
         mostrar(contenedorVisibleID)
         ocultar(ocultar1ID)
         ocultar(ocultar2ID)
         ocultar(ocultar3ID)
-        // eliminar evento Hover
-        // agrandar cuerpo o zoom zona
     }
 
     visible.addEventListener("click", modoCompraEstilos)
     visibleCuerpo.addEventListener("click", modoCompraEstilos)
 }
 
-const btnModoCompleto = document.getElementById("boton-volver")
-btnModoCompleto.addEventListener("click", modoCompleto)
+const btnVolver = document.getElementById("boton-volver")
+btnVolver.addEventListener("click", modoCompleto)
 
 function modoCompleto(){
 
-    btnModoCompleto.style.display = "none"
+    ocultar("boton-volver")
 
     popoverActivo()
 
@@ -515,7 +514,7 @@ function modoCompleto(){
     clickParaModoCompra("contenedorPies", "imgCuerpoPies", "contenedorManos", "contenedorCuerpo", "contenedorCabeza")
 }
 
-
+const modal = document.querySelector("#modal");
 const btnPagar = document.getElementById("btnPagar")
 btnPagar.addEventListener("click", () => {
 
@@ -531,9 +530,9 @@ btnPagar.addEventListener("click", () => {
                 <span class="tratamiento__modal__fecha"> ${tratamiento.fecha} </span>
             </div>
             `
-            modalBodyTratamientos.appendChild(tratamientoModal)
+        modalBodyTratamientos.appendChild(tratamientoModal)
         renderPreciosModal()
-        modal.close()
+        modal.close()  //tuve que cerrar primero el modal porq a veces me daba error como que ya estaba abierto
         modal.showModal()
     })
 })
@@ -548,7 +547,7 @@ function renderPreciosModal() {
     total.innerHTML = `Total: $${carrito.cuenta.total}`
 }
 
-const modal = document.querySelector("#modal");
+
 const pagar = document.querySelector("#pagar");
 const cancelar = document.querySelector("#cancelar");
 
@@ -570,7 +569,7 @@ function funcionesIniciales(){
 
     renderCarrito()
     validarCarrito()
-    
+
     crearTratamientosDesdeArray(tratamientosIniciales)
 
     renderPrincipal("contenedorCabeza", "cabeza")
@@ -587,4 +586,59 @@ function funcionesIniciales(){
     clickParaModoCompra("contenedorManos", "imgCuerpoManos", "contenedorCabeza" , "contenedorCuerpo", "contenedorPies")
     clickParaModoCompra("contenedorCuerpo", "imgCuerpoCuerpo", "contenedorManos", "contenedorCabeza", "contenedorPies")
     clickParaModoCompra("contenedorPies", "imgCuerpoPies", "contenedorManos", "contenedorCuerpo", "contenedorCabeza")
+}
+
+
+const btnAdministrador = document.getElementById("btnAdministrador")
+btnAdministrador.addEventListener("click", ()=> {
+    document.body.innerHTML = `
+        <header>
+            <a href="./index.html"><h1>GALATEA SKIN</h1></a> 
+            <img src="./assets/img/admin.svg" alt="Opciones Administrador" id="btnAdministrador">
+        </header>
+        <main>
+            <table class="body-tabla">
+                <thead>
+                    <tr>
+                        <th>ID</thstyle=>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Categoria</th>
+                        <th>EDITAR</th>
+                    </tr>
+                </thead>
+            </table>
+        </main>
+        <footer>
+            <div class="redesSociales">
+                <img src="./assets/img/facebook.png" alt="">
+                <img src="./assets/img/instagram.png" alt="">
+                <img src="./assets/img/wsp.png" alt="">
+            </div>
+            <p>COPYRIGHT - TODOS LOS DERECHOS RESERVADOS</p>
+        </footer>
+    ` 
+    crearTabla()
+    ocultar("btnAdministrador")
+})
+function crearTabla() {
+    
+    const tabla = document.querySelector(".body-tabla")
+
+    // const tablaFiltrada = tratamientos.filter(elemento => elemento.categoria === "pies") prueba de filtrado
+
+    tratamientos.forEach((tratamiento) => {
+        const itemTabla = document.createElement("tr")
+        itemTabla.innerHTML = ` 
+        <td>${tratamiento.id} </td>
+        <td>${tratamiento.nombre} </td>
+        <td>${tratamiento.descripcion} </td>
+        <td>$${tratamiento.precio} </td>
+        <td>${tratamiento.categoria} </td>
+        <td><button class="boton-editar">EDITAR</button></th>
+        `
+
+        tabla.appendChild(itemTabla)
+    })
 }
