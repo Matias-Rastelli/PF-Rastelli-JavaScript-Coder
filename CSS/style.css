@@ -433,7 +433,7 @@ table.body-tabla {
   border: 2px solid #A40808;
   background-color: #EEE7DB;
   width: 100%;
-  text-align: center;
+  text-align: left;
   border-collapse: collapse;
   margin: 50px; }
 
@@ -448,6 +448,10 @@ table.body-tabla tbody td {
 table.body-tabla tr:nth-child(even) {
   background: #F5C8BF; }
 
+table.body-tabla tr td:last-child,
+table.body-tabla tr td:first-child {
+  text-align: center; }
+
 table.body-tabla thead {
   background: #A40808; }
 
@@ -455,7 +459,7 @@ table.body-tabla thead th {
   font-size: 19px;
   font-weight: bold;
   color: #FFFFFF;
-  text-align: center;
+  text-align: left;
   border-left: 2px solid #A40808; }
 
 table.body-tabla thead th:first-child {
@@ -465,7 +469,7 @@ table.body-tabla tfoot td {
   font-size: 13px; }
 
 table.body-tabla tfoot .links {
-  text-align: right; }
+  text-align: left; }
 
 table.body-tabla tfoot .links a {
   display: inline-block;
@@ -473,3 +477,15 @@ table.body-tabla tfoot .links a {
   color: #A40808;
   padding: 2px 8px;
   border-radius: 5px; }
+
+#modalFecha {
+  padding: 10px;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background-color: grey;
+  color: white;
+  width: 600px;
+  height: 100px;
+  border-radius: 30px; }

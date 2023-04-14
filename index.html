@@ -89,6 +89,30 @@
             <img src="./assets/img/wsp.png" alt="">
         </div>
         <p>COPYRIGHT - TODOS LOS DERECHOS RESERVADOS</p>
+
+        <div id="modalFecha">
+            <form action="/enviar" method="post">
+                <h1>Formulario con Selector de Fecha</h1>
+                <label for="fecha">Fecha:</label>
+                <input type="date" id="fecha" name="fecha">
+        
+                <input type="text" list="turno-list" id="turno" name="turno" placeholder="Selecciona un turno">
+                <datalist id="turno-list">
+                    <option value="09:00">
+                    <option value="10:00">
+                    <option value="11:00">
+                    <option value="12:00">
+                    <option value="13:00">
+                    <option value="14:00">
+                    <option value="15:00">
+                    <option value="16:00">
+                    <option value="17:00">
+                    <option value="18:00">
+                </datalist>
+                <input type="submit" value="Enviar">
+            </form>
+        </div>
+
     </footer>
     </body>
 </html>

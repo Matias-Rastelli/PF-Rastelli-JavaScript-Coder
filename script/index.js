@@ -4,7 +4,6 @@ const tratamientos = []
 const carrito = JSON.parse(localStorage.getItem('carrito')) || { cuenta: { subtotal: 0, descuento: 0, total: 0 }, tratamientos: [] };
 
 
-
 class Tratamientos {
     constructor(nombre, precio, categoria, descripcion) {
         this.id = tratamientos.length + 1
@@ -249,7 +248,6 @@ function filtrarPorCategoria(arrayTratamientos, categoria) {
     return arrayTratamientos.filter(elemento => elemento.categoria === categoria);
 }
 
-
 function renderPrincipal(contenedorPrincipal, categoria) {
 
     const contenedor = document.getElementById(contenedorPrincipal)
@@ -452,7 +450,7 @@ function validarCarrito(){
 }
 
 function hover (parteCuerpoID, listadoID) {
-    
+
     const parte = document.getElementById(parteCuerpoID)
     const contenedor = document.getElementById(listadoID)
 
@@ -502,7 +500,7 @@ function modoCompleto(){
     mostrar("contenedorManos")
     mostrar("contenedorCuerpo")   
     mostrar("contenedorPies")
-    
+
     estiloModoListado("contenedorCabeza")
     estiloModoListado("contenedorManos")
     estiloModoListado("contenedorCuerpo")   
@@ -586,6 +584,8 @@ function funcionesIniciales(){
     clickParaModoCompra("contenedorManos", "imgCuerpoManos", "contenedorCabeza" , "contenedorCuerpo", "contenedorPies")
     clickParaModoCompra("contenedorCuerpo", "imgCuerpoCuerpo", "contenedorManos", "contenedorCabeza", "contenedorPies")
     clickParaModoCompra("contenedorPies", "imgCuerpoPies", "contenedorManos", "contenedorCuerpo", "contenedorCabeza")
+
+    limitadorFecha()
 }
 
 
@@ -597,6 +597,7 @@ btnAdministrador.addEventListener("click", ()=> {
             <img src="./assets/img/admin.svg" alt="Opciones Administrador" id="btnAdministrador">
         </header>
         <main>
+
             <table class="body-tabla">
                 <thead>
                     <tr>
@@ -638,7 +639,43 @@ function crearTabla() {
         <td>${tratamiento.categoria} </td>
         <td><button class="boton-editar">EDITAR</button></th>
         `
-
         tabla.appendChild(itemTabla)
+        
+        const btnEditar = itemTabla.querySelector(".boton-editar")
+        btnEditar.addEventListener("click", ()=>{
+            editarTratamiento(tratamiento)
+        })
     })
+}
+
+function editarTratamiento (tratamiento){
+
+    let nuevoX = prompt(`ingresa el nuevo X para el tratamiento ${tratamiento.nombre}, con id: ${tratamiento.id}`)
+    tratamiento.cambiarPrecio(nuevoX)
+
+    const tabla = document.querySelector(".body-tabla")
+    tabla.innerHTML = `
+        <thead>
+            <tr>
+                <th>ID</thstyle=>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Categoria</th>
+                <th>EDITAR</th>
+            </tr>
+        </thead>
+        `
+    crearTabla()
+}
+
+function limitadorFecha () {
+    const fechaActual = new Date().toISOString().split('T')[0];
+    
+    const limite30dias = new Date()
+    limite30dias.setDate(limite30dias.getDate() + 30)
+    const fechaLimite = limite30dias.toISOString().split('T')[0]
+
+    document.getElementById("fecha").min = fechaActual
+    document.getElementById("fecha").max = fechaLimite
 }
