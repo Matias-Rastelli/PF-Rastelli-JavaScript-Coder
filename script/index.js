@@ -11,7 +11,12 @@ class Tratamientos {
         this.precio = parseFloat(precio)
         this.categoria = categoria
         this.descripcion = descripcion
-        this.fecha = new Date()
+        this.fecha = {
+            dia: "##",
+            mes: "##",
+            anio: "####",
+            turno: "##",
+        }
         this.img = `./assets/img/${categoria}.png`
     }
 
@@ -34,17 +39,6 @@ class Tratamientos {
     }
     cambiarDescripcion(nuevaDescripcion){
         this.descripcion = nuevaDescripcion
-    }
-
-    cambiarFecha(fechaIngresada){
-        const nuevaFecha = fechaIngresada
-        this.fecha.setFullYear(nuevaFecha.getFullYear())
-        this.fecha.setMonth(nuevaFecha.getMonth())
-        this.fecha.setDate(nuevaFecha.getDate())
-        this.fecha.setHours(nuevaFecha.getHours())
-        this.fecha.setMinutes(0)
-        this.fecha.setSeconds(0)
-        this.fecha.setMilliseconds(0)
     }
 }
 
@@ -321,7 +315,7 @@ function renderCarrito(){
     carrito.tratamientos.forEach((tratamiento) => {
 
         tratamiento.nombre.length > 28 ? tratamiento.nombre = tratamiento.nombre.substring(0, 26) + `..` : tratamiento.nombre
-
+        
         const divItem = document.createElement("div")
         divItem.classList.add("carrito__tratamientos__item")
         divItem.innerHTML = `
@@ -332,13 +326,13 @@ function renderCarrito(){
                 <p class="item__nombre">${tratamiento.nombre}</p>
                 <div class="item__fecha">
                     <p>Fecha: 
-                        <span class="item__fecha__dia">##</span>
+                        <span class="item__fecha__dia">${tratamiento.fecha.dia}</span>
                         /
-                        <span class="item__fecha__mes">##</span>
+                        <span class="item__fecha__mes">${tratamiento.fecha.mes}</span>
                         /
-                        <span class="item__fecha__año">##</span>
+                        <span class="item__fecha__año">${tratamiento.fecha.anio}</span>
                         --
-                        <span class="item__fecha__hora">##</span> hs.
+                        <span class="item__fecha__hora">${tratamiento.fecha.turno}</span> hs.
                     </p>
                     <div class="item__fecha__boton"><svg width="30" height="30" viewBox="0 0 256 256"><path fill="currentColor" d="M208 34h-26V24a6 6 0 0 0-12 0v10H86V24a6 6 0 0 0-12 0v10H48a14 14 0 0 0-14 14v160a14 14 0 0 0 14 14h160a14 14 0 0 0 14-14V48a14 14 0 0 0-14-14ZM48 46h26v10a6 6 0 0 0 12 0V46h84v10a6 6 0 0 0 12 0V46h26a2 2 0 0 1 2 2v34H46V48a2 2 0 0 1 2-2Zm160 164H48a2 2 0 0 1-2-2V94h164v114a2 2 0 0 1-2 2Zm-98-90v64a6 6 0 0 1-12 0v-54.29l-7.32 3.66a6 6 0 1 1-5.36-10.74l16-8A6 6 0 0 1 110 120Zm59.57 29.25L148 178h20a6 6 0 0 1 0 12h-32a6 6 0 0 1-4.8-9.6L160 142a10 10 0 1 0-16.65-11a6 6 0 1 1-10.35-6a22 22 0 1 1 36.62 24.26Z"/></svg></div>
                 </div>
@@ -357,6 +351,58 @@ function renderCarrito(){
             renderCarrito()
             validarCarrito()
         })
+
+        const calendario = divItem.querySelector(".item__fecha__boton")
+        calendario.addEventListener("click", crearCalendario)
+
+            function crearCalendario(){
+            const divCalendario = document.createElement("div")
+            divCalendario.classList.add("modalFecha")
+            divCalendario.innerHTML = `
+                <form action="/enviar" method="post">
+                    <h3>ELEGIR TURNO:</h3>
+
+                    <label for="fecha">Fecha:</label>
+                    <input type="date" class="fecha" name="fecha">
+
+                    <label for="turnos">Turno:</label>
+                    <select class="turnos" name="turnos">
+                        <option value="">Elija un turno</option>
+                        <option value="9">09:00 hs</option>
+                        <option value="10">10:00 hs</option>
+                        <option value="11">11:00 hs</option>
+                        <option value="12">12:00 hs</option>
+                        <option value="13">13:00 hs</option>
+                        <option value="14">14:00 hs</option>
+                        <option value="15">15:00 hs</option>
+                        <option value="16">16:00 hs</option>
+                        <option value="17">17:00 hs</option>
+                        <option value="18">18:00 hs</option>
+                    </select>
+                    <button class="btnGuardarFecha">Guardar</button>
+                </form>
+                `
+                divItem.appendChild(divCalendario)
+                limitadorFecha()
+
+                const btnGuardarFecha = document.querySelector(".btnGuardarFecha")
+                btnGuardarFecha.addEventListener("click", (e) => {
+                    e.preventDefault()
+                    const fecha = document.querySelector(".fecha").value
+                    const turno = document.querySelector(".turnos").value
+                    const fechaSeparada = fecha.split("-")
+
+
+                    tratamiento.fecha.turno = turno ? turno : "##"
+                    tratamiento.fecha.dia = fechaSeparada[2] ?? "##"
+                    tratamiento.fecha.mes = fechaSeparada[1] ?? "##"
+                    tratamiento.fecha.anio = fechaSeparada[0] ? fechaSeparada[0] : "####"
+                    renderCarrito()
+                })
+        }
+
+
+
         aplicarCupon()
         carritoTratamientos.appendChild(divItem)
     })
@@ -517,23 +563,26 @@ const btnPagar = document.getElementById("btnPagar")
 btnPagar.addEventListener("click", () => {
 
     const modalBodyTratamientos = document.querySelector(".modal__body__tratamientos")
+    modalBodyTratamientos.innerHTML = ""
 
-    carrito.tratamientos.forEach((tratamiento) =>{
-
-        const tratamientoModal = document.createElement("div")
-        tratamientoModal.classList = "tratamiento__modal"
-        tratamientoModal.innerHTML = `
+        carrito.tratamientos.forEach((tratamiento) =>{
+            const tratamientoModal = document.createElement("div")
+            
+            tratamientoModal.classList = "tratamiento__modal"
+            tratamientoModal.innerHTML = `
             <div class="tratamiento__modal">
-                <span class="tratamiento__modal__nombre" >${tratamiento.nombre} </span>
-                <span class="tratamiento__modal__fecha"> ${tratamiento.fecha} </span>
+            <span class="tratamiento__modal__nombre" >${tratamiento.nombre} </span>
+            <span class="tratamiento__modal__fecha"> ${tratamiento.fecha.dia} / ${tratamiento.fecha.mes} / ${tratamiento.fecha.anio} - ${tratamiento.fecha.turno} Hs.</span>
             </div>
             `
-        modalBodyTratamientos.appendChild(tratamientoModal)
-        renderPreciosModal()
-        modal.close()  //tuve que cerrar primero el modal porq a veces me daba error como que ya estaba abierto
-        modal.showModal()
-    })
-})
+            modalBodyTratamientos.appendChild(tratamientoModal)
+            renderPreciosModal()
+            modal.close()  //tuve que cerrar primero el modal porq a veces me daba error como que ya estaba abierto
+            modal.showModal()
+            
+        })
+    }
+)
 
 function renderPreciosModal() {
     const subtotal = document.querySelector(".modal__footer__totales__subtotal")
@@ -544,7 +593,6 @@ function renderPreciosModal() {
     descuento.innerHTML = `Descuento: $${carrito.cuenta.descuento}`
     total.innerHTML = `Total: $${carrito.cuenta.total}`
 }
-
 
 const pagar = document.querySelector("#pagar");
 const cancelar = document.querySelector("#cancelar");
@@ -584,8 +632,6 @@ function funcionesIniciales(){
     clickParaModoCompra("contenedorManos", "imgCuerpoManos", "contenedorCabeza" , "contenedorCuerpo", "contenedorPies")
     clickParaModoCompra("contenedorCuerpo", "imgCuerpoCuerpo", "contenedorManos", "contenedorCabeza", "contenedorPies")
     clickParaModoCompra("contenedorPies", "imgCuerpoPies", "contenedorManos", "contenedorCuerpo", "contenedorCabeza")
-
-    limitadorFecha()
 }
 
 
@@ -669,13 +715,14 @@ function editarTratamiento (tratamiento){
     crearTabla()
 }
 
-function limitadorFecha () {
+function limitadorFecha() {
     const fechaActual = new Date().toISOString().split('T')[0];
-    
+
     const limite30dias = new Date()
     limite30dias.setDate(limite30dias.getDate() + 30)
     const fechaLimite = limite30dias.toISOString().split('T')[0]
 
-    document.getElementById("fecha").min = fechaActual
-    document.getElementById("fecha").max = fechaLimite
+    document.querySelector(".fecha").min = fechaActual
+    document.querySelector(".fecha").max = fechaLimite
 }
+

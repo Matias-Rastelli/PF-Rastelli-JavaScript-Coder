@@ -57,7 +57,6 @@ main {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  overflow: hidden;
   min-height: 100%;
   width: 30%;
   border: solid 1px black;
@@ -75,11 +74,11 @@ main {
     gap: 5px;
     width: 100%; }
     #carrito #carrito__tratamientos .carrito__tratamientos__item {
+      position: relative;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      overflow: hidden;
       border: 1px solid black;
       border-radius: 10px;
       width: 95%;
@@ -478,14 +477,29 @@ table.body-tabla tfoot .links a {
   padding: 2px 8px;
   border-radius: 5px; }
 
-#modalFecha {
-  padding: 10px;
+.modalFecha {
   display: block;
+  padding: 10px;
   position: absolute;
-  top: 50%;
-  left: 50%;
+  bottom: 25px;
+  right: -50px;
   background-color: grey;
   color: white;
-  width: 600px;
-  height: 100px;
-  border-radius: 30px; }
+  width: 180px;
+  height: 180px;
+  border-radius: 30px;
+  border: 1px solid black; }
+  .modalFecha form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center; }
+    .modalFecha form label {
+      width: 80%; }
+    .modalFecha form input {
+      width: 80%; }
+    .modalFecha form select {
+      width: 80%; }
+    .modalFecha form button {
+      width: 80%;
+      border-radius: 5px; }
