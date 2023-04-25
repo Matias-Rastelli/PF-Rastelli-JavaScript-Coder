@@ -477,6 +477,10 @@ table.body-tabla tfoot .links a {
   padding: 2px 8px;
   border-radius: 5px; }
 
+.disabled {
+  opacity: 0.4;
+  pointer-events: none; }
+
 .modalFecha {
   display: block;
   padding: 10px;

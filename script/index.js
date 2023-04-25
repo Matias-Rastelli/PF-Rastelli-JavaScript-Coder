@@ -391,13 +391,28 @@ function renderCarrito(){
                     const fecha = document.querySelector(".fecha").value
                     const turno = document.querySelector(".turnos").value
                     const fechaSeparada = fecha.split("-")
+                    
+                    const fechaAValidar = {
+                        dia: fechaSeparada[2] ?? "##",
+                        mes: fechaSeparada[1] ?? "##",
+                        anio: fechaSeparada[0] ? fechaSeparada[0] : "####",
+                        turno: turno ? turno : "##"
+                    }
 
-
-                    tratamiento.fecha.turno = turno ? turno : "##"
-                    tratamiento.fecha.dia = fechaSeparada[2] ?? "##"
-                    tratamiento.fecha.mes = fechaSeparada[1] ?? "##"
-                    tratamiento.fecha.anio = fechaSeparada[0] ? fechaSeparada[0] : "####"
+                    if (validarFecha(fechaAValidar)){
+                        tratamiento.fecha.turno = turno ? turno : "##"
+                        tratamiento.fecha.dia = fechaSeparada[2] ?? "##"
+                        tratamiento.fecha.mes = fechaSeparada[1] ?? "##"
+                        tratamiento.fecha.anio = fechaSeparada[0] ? fechaSeparada[0] : "####"
+                    } else{
+                        alert("Estas eligiendo 2 tratamientos a la misma hora, mismo dia, por favor revisar las fechas")
+                        tratamiento.fecha.turno = "##"
+                        tratamiento.fecha.dia = "##"
+                        tratamiento.fecha.mes = "##"
+                        tratamiento.fecha.anio = "####"
+                    }                    
                     renderCarrito()
+                    validarCarrito()
                 })
         }
 
@@ -406,6 +421,18 @@ function renderCarrito(){
         aplicarCupon()
         carritoTratamientos.appendChild(divItem)
     })
+}
+
+function validarFecha(fechaRevisar) {
+    let fechaValida = true
+    const fechaARevisar = JSON.stringify(fechaRevisar)
+    carrito.tratamientos.forEach((tratamiento) => {
+        const fecha = JSON.stringify(tratamiento.fecha)
+        if (fechaARevisar === fecha) {
+            fechaValida = false
+        }
+    })
+    return fechaValida
 }
 
 function total(){
@@ -493,6 +520,7 @@ function validarCarrito(){
     } else {
         sectorCompra.style.width = "70%", mostrar("carrito")
     }
+    desactivarBoton()
 }
 
 function hover (parteCuerpoID, listadoID) {
@@ -560,6 +588,20 @@ function modoCompleto(){
 
 const modal = document.querySelector("#modal");
 const btnPagar = document.getElementById("btnPagar")
+
+function desactivarBoton () {
+    for (let i = 0; i < carrito.tratamientos.length; i++) {
+        if (carrito.tratamientos[i].fecha.dia == "##" || carrito.tratamientos[i].fecha.turno == "##") {
+            btnPagar.disabled = true
+            btnPagar.classList.add("disabled")
+            return
+        }
+    }
+    btnPagar.disabled = false
+    btnPagar.classList.remove("disabled")
+    console.log("boton activado")
+}
+
 btnPagar.addEventListener("click", () => {
 
     const modalBodyTratamientos = document.querySelector(".modal__body__tratamientos")
