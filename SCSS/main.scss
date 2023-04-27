@@ -485,7 +485,6 @@ main{
                 justify-content: center;
                 gap: 50px;
                 font-size: medium;
-                border-bottom: 0.5px black solid;
                 padding-top: 5px;
 
                 span {
@@ -684,4 +683,31 @@ table.body-tabla tfoot .links a {
             border-radius: 5px;
         }
     }
+}
+
+.swal-modal {
+    background-color: lightblue;
+    border: 3px solid black;
+}
+
+.swal-text {
+    display: block;
+    text-align: center;
+    color: black;
+    font-size: 18px;
+}
+
+.swal-title {
+    color: black;
+    font-size: 36px;
+    margin-bottom: 28px;
+}
+
+.swal-button {
+    padding: 7px 19px;
+    border-radius: 2px;
+    background-color: #4962B3;
+    font-size: 12px;
+    border: 1px solid #3e549a;
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
 }

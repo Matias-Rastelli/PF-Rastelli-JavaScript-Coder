@@ -3,7 +3,6 @@
 const tratamientos = []
 const carrito = JSON.parse(localStorage.getItem('carrito')) || { cuenta: { subtotal: 0, descuento: 0, total: 0 }, tratamientos: [] };
 
-
 class Tratamientos {
     constructor(nombre, precio, categoria, descripcion) {
         this.id = tratamientos.length + 1
@@ -265,7 +264,6 @@ function renderPrincipal(contenedorPrincipal, categoria) {
         imgCarrito.addEventListener("click", () => {
             tratamiento.agregarCarrito()
             carrito.cuenta.subtotal += tratamiento.precio
-            // funcion que muestre toast que se agrego al carrito
             renderCarrito()
             validarCarrito()
         })
@@ -308,6 +306,7 @@ function popoverActivo() {
 }
 
 function renderCarrito(){
+
     const carritoTratamientos = document.getElementById("carrito__tratamientos")
 
     carritoTratamientos.innerHTML = ""
@@ -405,7 +404,12 @@ function renderCarrito(){
                         tratamiento.fecha.mes = fechaSeparada[1] ?? "##"
                         tratamiento.fecha.anio = fechaSeparada[0] ? fechaSeparada[0] : "####"
                     } else{
-                        alert("Estas eligiendo 2 tratamientos a la misma hora, mismo dia, por favor revisar las fechas")
+                        swal({
+                            title: "Fecha duplicada",
+                            text: "Lo siento, parece que ya tienes un turno programado para la misma fecha y hora.",
+                            icon: "error",
+                            timer: 5000
+                        });
                         tratamiento.fecha.turno = "##"
                         tratamiento.fecha.dia = "##"
                         tratamiento.fecha.mes = "##"
@@ -422,7 +426,6 @@ function renderCarrito(){
         carritoTratamientos.appendChild(divItem)
     })
 }
-
 function validarFecha(fechaRevisar) {
     let fechaValida = true
     const fechaARevisar = JSON.stringify(fechaRevisar)
@@ -433,6 +436,16 @@ function validarFecha(fechaRevisar) {
         }
     })
     return fechaValida
+}
+function limitadorFecha() {
+    const fechaActual = new Date().toISOString().split('T')[0];
+
+    const limite30dias = new Date()
+    limite30dias.setDate(limite30dias.getDate() + 30)
+    const fechaLimite = limite30dias.toISOString().split('T')[0]
+
+    document.querySelector(".fecha").min = fechaActual
+    document.querySelector(".fecha").max = fechaLimite
 }
 
 function total(){
@@ -599,7 +612,6 @@ function desactivarBoton () {
     }
     btnPagar.disabled = false
     btnPagar.classList.remove("disabled")
-    console.log("boton activado")
 }
 
 btnPagar.addEventListener("click", () => {
@@ -608,13 +620,14 @@ btnPagar.addEventListener("click", () => {
     modalBodyTratamientos.innerHTML = ""
 
         carrito.tratamientos.forEach((tratamiento) =>{
+            const {nombre, fecha} = tratamiento
             const tratamientoModal = document.createElement("div")
             
             tratamientoModal.classList = "tratamiento__modal"
             tratamientoModal.innerHTML = `
             <div class="tratamiento__modal">
-            <span class="tratamiento__modal__nombre" >${tratamiento.nombre} </span>
-            <span class="tratamiento__modal__fecha"> ${tratamiento.fecha.dia} / ${tratamiento.fecha.mes} / ${tratamiento.fecha.anio} - ${tratamiento.fecha.turno} Hs.</span>
+            <span class="tratamiento__modal__nombre" >${nombre} </span>
+            <span class="tratamiento__modal__fecha"> ${fecha.dia} / ${fecha.mes} / ${fecha.anio} - ${fecha.turno} Hs.</span>
             </div>
             `
             modalBodyTratamientos.appendChild(tratamientoModal)
@@ -627,28 +640,30 @@ btnPagar.addEventListener("click", () => {
 )
 
 function renderPreciosModal() {
-    const subtotal = document.querySelector(".modal__footer__totales__subtotal")
-    const descuento = document.querySelector(".modal__footer__totales__descuento")
-    const total = document.querySelector(".modal__footer__totales__total")
+    const { subtotal, descuento, total } = carrito.cuenta
 
-    subtotal.innerHTML = `Subtotal: $${carrito.cuenta.subtotal}`
-    descuento.innerHTML = `Descuento: $${carrito.cuenta.descuento}`
-    total.innerHTML = `Total: $${carrito.cuenta.total}`
+    const subtotalElement = document.querySelector(".modal__footer__totales__subtotal")
+    const descuentoElement = document.querySelector(".modal__footer__totales__descuento")
+    const totalElement = document.querySelector(".modal__footer__totales__total")
+
+    subtotalElement.innerHTML = `Subtotal: $${subtotal}`
+    descuentoElement.innerHTML = `Descuento: $${descuento}`
+    totalElement.innerHTML = `Total: $${total}`
 }
 
-const pagar = document.querySelector("#pagar");
-const cancelar = document.querySelector("#cancelar");
+const pagar = document.querySelector("#pagar")
+const cancelar = document.querySelector("#cancelar")
 
 pagar.addEventListener('click', () => {
+    modal.close();
     carrito.tratamientos = []
     carrito.cuenta.subtotal = 0
     localStorage.clear()
-    modal.close()
     validarCarrito()
-    location.reload();
+    location.reload()
 });
 cancelar.addEventListener('click', () => {
-    modal.close();
+    modal.close()
 });
 
 window.onload = funcionesIniciales()
@@ -718,13 +733,14 @@ function crearTabla() {
     // const tablaFiltrada = tratamientos.filter(elemento => elemento.categoria === "pies") prueba de filtrado
 
     tratamientos.forEach((tratamiento) => {
+        const {id, nombre, descripcion, precio, categoria} = tratamiento
         const itemTabla = document.createElement("tr")
         itemTabla.innerHTML = ` 
-        <td>${tratamiento.id} </td>
-        <td>${tratamiento.nombre} </td>
-        <td>${tratamiento.descripcion} </td>
-        <td>$${tratamiento.precio} </td>
-        <td>${tratamiento.categoria} </td>
+        <td>${id} </td>
+        <td>${nombre} </td>
+        <td>${descripcion} </td>
+        <td>$${precio} </td>
+        <td>${categoria} </td>
         <td><button class="boton-editar">EDITAR</button></th>
         `
         tabla.appendChild(itemTabla)
@@ -757,14 +773,5 @@ function editarTratamiento (tratamiento){
     crearTabla()
 }
 
-function limitadorFecha() {
-    const fechaActual = new Date().toISOString().split('T')[0];
 
-    const limite30dias = new Date()
-    limite30dias.setDate(limite30dias.getDate() + 30)
-    const fechaLimite = limite30dias.toISOString().split('T')[0]
-
-    document.querySelector(".fecha").min = fechaActual
-    document.querySelector(".fecha").max = fechaLimite
-}
 
