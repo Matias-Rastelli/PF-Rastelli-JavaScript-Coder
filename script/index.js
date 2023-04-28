@@ -1,7 +1,22 @@
-// simulador de pago y reserva de turnos de estetica //
-
 const tratamientos = []
 const carrito = JSON.parse(localStorage.getItem('carrito')) || { cuenta: { subtotal: 0, descuento: 0, total: 0 }, tratamientos: [] };
+const tratamientosIniciales = []
+const cupones = [
+    {key: "cupon10", value:0.10},
+    {key: "cupon20", value:0.20},
+    {key: "cupon50", value:0.50},
+    {key: "cupon100", value:1}
+]
+const btnCupon = document.getElementById("btnCupon")
+const inputCupon = document.getElementById("cupon")
+const btnVolver = document.getElementById("boton-volver")
+const modal = document.querySelector("#modal");
+const btnPagar = document.getElementById("btnPagar")
+const pagar = document.querySelector("#pagar")
+const cancelar = document.querySelector("#cancelar")
+const btnAdministrador = document.getElementById("btnAdministrador")
+
+
 
 class Tratamientos {
     constructor(nombre, precio, categoria, descripcion) {
@@ -20,7 +35,16 @@ class Tratamientos {
     }
 
     agregarCarrito(){
-        carrito.tratamientos.push(this)
+        if(carrito.tratamientos.length >= 6){
+            swal({
+                title: "Máximo de reservas alcanzado",
+                text: "Lo siento, parece que ya tienes el máximo posible de reservas en tu carrito.",
+                icon: "error",
+                timer: 5000
+            });
+        } else{
+            carrito.tratamientos.push(this)
+        }
     }
 
     pushearTratamiento() {
@@ -41,194 +65,19 @@ class Tratamientos {
     }
 }
 
-const tratamientosIniciales = [
-    {
-        nombre: "Hidratación capilar",
-        precio: 3000,
-        descripcion: "Tratamiento para hidratar y revitalizar el cabello seco y maltratado",
-        categoria: "cabeza"
-    },
-    {
-        nombre: "Nutrición capilar",
-        precio: 4000,
-        descripcion: "Tratamiento para nutrir y fortalecer el cabello debilitado y sin vida",
-        categoria: "cabeza"
-    },
-    {
-        nombre: "Queratina",
-        precio: 5000,
-        descripcion: "Tratamiento para alisar y reducir el frizz en el cabello",
-        categoria: "cabeza"
-    },
-    {
-        nombre: "Limpieza facial profunda",
-        precio: 2000,
-        descripcion: "Limpieza facial profunda para eliminar impurezas y células muertas",
-        categoria: "cabeza"
-    },
-    {
-        nombre: "Exfoliación facial",
-        precio: 2500,
-        descripcion: "Tratamiento para exfoliar y suavizar la piel del rostro",
-        categoria: "cabeza"
-    },
-    {
-        nombre: "Eliminación de puntos negros y espinillas",
-        precio: 3000,
-        descripcion: "Tratamiento para remover los puntos negros y espinillas del rostro",
-        categoria: "cabeza"
-    },
-    {
-        nombre: "Lifting facial",
-        precio: 4500,
-        descripcion: "Tratamiento para levantar y reafirmar la piel del rostro",
-        categoria: "cabeza"
-    },
-    {
-        nombre: "Microdermabrasión",
-        precio: 3500,
-        descripcion: "Tratamiento para exfoliar y mejorar la textura de la piel del rostro",
-        categoria: "cabeza"
-    },
-    {
-        nombre: "Radiofrecuencia facial",
-        precio: 4000,
-        descripcion: "Tratamiento para rejuvenecer y tonificar la piel del rostro",
-        categoria: "cabeza"
-    },
-    {
-        nombre: 'Masaje relajante',
-        precio: 2500,
-        descripcion: 'Masaje suave y relajante que ayuda a reducir el estrés y la ansiedad.',
-        categoria: 'cuerpo'
-    },
-    {
-        nombre: 'Masaje descontracturante',
-        precio: 3500,
-        descripcion: 'Masaje profundo que ayuda a aliviar la tensión muscular y reducir las contracturas.',
-        categoria: 'cuerpo'
-    },
-    {
-        nombre: 'Masaje deportivo',
-        precio: 4500,
-        descripcion: 'Masaje intenso que ayuda a prevenir lesiones y mejorar el rendimiento físico.',
-        categoria: 'cuerpo'
-    },
-    {
-        nombre: 'Masaje de drenaje linfático',
-        precio: 3000,
-        descripcion: 'Masaje suave y lento que ayuda a mejorar la circulación linfática y reducir la retención de líquidos.',
-        categoria: 'cuerpo'
-    },
-    {
-        nombre: 'Masaje reflexológico',
-        precio: 2000,
-        descripcion: 'Masaje que se enfoca en los puntos de reflexología para aliviar dolores y mejorar la salud general del cuerpo.',
-        categoria: 'cuerpo'
-    },
-    {
-        nombre: 'Masaje con piedras calientes',
-        precio: 4000,
-        descripcion: 'Masaje que utiliza piedras calientes para relajar los músculos y mejorar la circulación sanguínea.',
-        categoria: 'cuerpo'
-    },
-    {
-        nombre: 'Masaje con ventosas',
-        precio: 3500,
-        descripcion: 'Masaje que utiliza ventosas para mejorar la circulación sanguínea y reducir la tensión muscular.',
-        categoria: 'cuerpo'
-    },
-    {
-        nombre: 'Masaje con aromaterapia',
-        precio: 3000,
-        descripcion: 'Masaje que utiliza aceites esenciales para relajar y equilibrar el cuerpo y la mente.',
-        categoria: 'cuerpo'
-    },
-    {
-        nombre: 'Masaje con digitopresión',
-        precio: 2500,
-        descripcion: 'Masaje que utiliza la presión de los dedos para aliviar dolores y mejorar la circulación.',
-        categoria: 'cuerpo'
-    },
-    {
-        nombre: 'Masaje de tejido profundo',
-        precio: 4500,
-        descripcion: 'Masaje intenso que llega a las capas más profundas de los músculos para aliviar la tensión crónica y mejorar la postura.',
-        categoria: 'cuerpo'
-    },
-    {
-        nombre: "Pedicura básica",
-        precio: 1500,
-        descripcion: "Incluye corte y limado de uñas, retiro de cutículas y esmaltado.",
-        categoria: "pies"
-    },
-    {
-        nombre: "Pedicura Spa",
-        precio: 2500,
-        descripcion: "Incluye baño de pies, exfoliación, hidratación y masaje.",
-        categoria: "pies"
-    },
-    {
-        nombre: "Reflexología",
-        precio: 2000,
-        descripcion: "Terapia de masaje aplicada a los pies para estimular puntos reflejos en el cuerpo.",
-        categoria: "pies"
-    },
-    {
-        nombre: "Tratamiento de parafina",
-        precio: 3000,
-        descripcion: "Sumergir los pies en parafina caliente para hidratar y suavizar la piel.",
-        categoria: "pies"
-    },
-    {
-        nombre: "Tratamiento de la piel seca",
-        precio: 2000,
-        descripcion: "Tratamiento para hidratar y suavizar la piel seca de los pies.",
-        categoria: "pies"
-    },
-    {
-        nombre: "Masaje de pies",
-        precio: 1500,
-        descripcion: "Terapia de masaje aplicada a los pies para aliviar tensiones y mejorar la circulación.",
-        categoria: "pies"
-    },
-    {
-        nombre: "Tratamiento de hongos en las uñas",
-        precio: 3500,
-        descripcion: "Tratamiento para eliminar los hongos en las uñas de los pies.",
-        categoria: "pies"
-    },
-    {
-        nombre: "Manicura básica",
-        precio: 3000,
-        descripcion: "Incluye limado, retirado de cutícula, esmaltado básico y masaje de manos.",
-        categoria: "manos"
-    },
-    {
-        nombre: "Manicura francesa",
-        precio: 3500,
-        descripcion: "Incluye limado, retirado de cutícula, esmaltado francés y masaje de manos.",
-        categoria: "manos"
-    },
-    {
-        nombre: "Parafina de manos",
-        precio: 4000,
-        descripcion: "Tratamiento para hidratar y suavizar la piel de las manos, utilizando parafina caliente.",
-        categoria: "manos"
-    },
-    {
-        nombre: "Manos de seda",
-        precio: 2500,
-        descripcion: "Tratamiento para suavizar e hidratar la piel de las manos, utilizando una mezcla especial de productos.",
-        categoria: "manos"
-    },
-    {
-        nombre: "Manicura spa",
-        precio: 4500,
-        descripcion: "Incluye limado, retirado de cutícula, exfoliación, mascarilla hidratante, masaje y esmaltado básico.",
-        categoria: "manos"
-    }
-]
+
+function pedirData (){
+   
+    fetch("./data/tratamientos.json")
+    .then(response => response.json())
+    .then(data => {
+        data.forEach(tratamiento => {
+            tratamientosIniciales.push(tratamiento)
+        });
+        funcionesIniciales()
+    })
+}
+
 
 function crearTratamientosDesdeArray(arrayTratamientos) {
     arrayTratamientos.forEach((tratamiento) => {
@@ -458,15 +307,9 @@ function total(){
     `
 }
 
-const cupones = [
-    {key: "cupon10", value:0.10},
-    {key: "cupon20", value:0.20},
-    {key: "cupon50", value:0.50},
-    {key: "cupon100", value:1}
-]
 
-const btnCupon = document.getElementById("btnCupon")
-const inputCupon = document.getElementById("cupon")
+
+
 btnCupon.addEventListener("click", aplicarCupon)
 
 function aplicarCupon(){
@@ -543,12 +386,13 @@ function hover (parteCuerpoID, listadoID) {
 
         function hoverBody () {
             parte.style.filter = "brightness(3)"
-            contenedor.style.backgroundColor = "lightblue"
+            contenedor.style.boxShadow = "0px 0px 10px 10px lightblue"
+            
         }
 
         function hoverOutBody(){
             parte.style.removeProperty("filter")
-            contenedor.style.backgroundColor = ""
+            contenedor.style.boxShadow = ""
         }
 
         parte.addEventListener("mouseover", hoverBody)    
@@ -574,7 +418,7 @@ function clickParaModoCompra(contenedorVisibleID, ParteCuerpoClick, ocultar1ID, 
     visibleCuerpo.addEventListener("click", modoCompraEstilos)
 }
 
-const btnVolver = document.getElementById("boton-volver")
+
 btnVolver.addEventListener("click", modoCompleto)
 
 function modoCompleto(){
@@ -599,8 +443,7 @@ function modoCompleto(){
     clickParaModoCompra("contenedorPies", "imgCuerpoPies", "contenedorManos", "contenedorCuerpo", "contenedorCabeza")
 }
 
-const modal = document.querySelector("#modal");
-const btnPagar = document.getElementById("btnPagar")
+
 
 function desactivarBoton () {
     for (let i = 0; i < carrito.tratamientos.length; i++) {
@@ -651,8 +494,7 @@ function renderPreciosModal() {
     totalElement.innerHTML = `Total: $${total}`
 }
 
-const pagar = document.querySelector("#pagar")
-const cancelar = document.querySelector("#cancelar")
+
 
 pagar.addEventListener('click', () => {
     modal.close();
@@ -666,7 +508,7 @@ cancelar.addEventListener('click', () => {
     modal.close()
 });
 
-window.onload = funcionesIniciales()
+window.onload = pedirData()
 
 function funcionesIniciales(){
 
@@ -692,7 +534,7 @@ function funcionesIniciales(){
 }
 
 
-const btnAdministrador = document.getElementById("btnAdministrador")
+
 btnAdministrador.addEventListener("click", ()=> {
     document.body.innerHTML = `
         <header>
@@ -772,6 +614,3 @@ function editarTratamiento (tratamiento){
         `
     crearTabla()
 }
-
-
-
