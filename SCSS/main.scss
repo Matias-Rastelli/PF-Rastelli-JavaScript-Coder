@@ -5,12 +5,20 @@
     user-select: none;
 }
 
+$color1: #d45e80;
+$color2: #c6838c;
+$color3: #cfbf9e;
+$color4: #f7dea8;
+$color5: #f6be5f;
+
 header{
     position: relative;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    height: 15vh;
+    background-color: $color2;
 
     #btnAdministrador{
         cursor: pointer;
@@ -29,6 +37,8 @@ footer{
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    height: 10vh;
+    background-color: $color2;
     
     .redesSociales{
         display: flex;
@@ -44,20 +54,15 @@ footer{
 }
 
 body{
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     min-height: 100vh;
-}
-
-header{
-    height: 15vh;
-    background-color: lightgreen
-
-} 
-footer{
-    height: 10vh;
-    background-color: lightcoral;
+    background-image: url(../assets/img/trama.jpg);
+    background-size: contain;
+    background-color: $color3;
+    background-blend-mode: luminosity;
 }
 
 main{
@@ -75,7 +80,10 @@ main{
     min-height: 100%;
     width: 30%;
     border: solid 1px black;
-    background-color: lightblue;
+    background-color: $color4;
+    background-image: url(../assets/img/trama.jpg);
+    background-size: cover;
+    background-blend-mode: multiply;
 
     h2{
         font-size: 36px;
@@ -103,6 +111,7 @@ main{
             width: 95%;
             height: 70px;
             box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
+            background-color: $color4;
 
             .item__tipo__tratamiento{
                 margin-left: 10px;
@@ -253,6 +262,7 @@ main{
     width: 70%;
     justify-content: space-evenly;
 
+
     .boton-volver{
         display: none;
         flex-direction: row;
@@ -261,7 +271,7 @@ main{
         top: 10px;
         left: 100px;
         cursor: pointer;
-        width: 300px;
+        width: 260px;
         height: 40px;
         z-index: 10;
 
@@ -275,7 +285,7 @@ main{
         }
 
         &:hover{
-            background-color: lightblue;
+            background-color: $color4
         }
 
     }
@@ -292,6 +302,7 @@ main{
         padding: 2px;
         border: solid 1px black;
         border-radius: 10px;
+        background-color: #e7e7e7;
         
 
         h2{
@@ -402,7 +413,7 @@ main{
     flex-direction: column;
     width: 400px;
     height: auto;
-    background-color: rgb(64, 174, 211);
+    background-color: $color5;
     opacity: 1;
     border: 1px solid black;
     border-radius: 20px;
@@ -452,7 +463,7 @@ main{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: lightsalmon;
+    background-color: $color2;
     padding: 15px;
 
     .modal__header{
@@ -585,8 +596,8 @@ main{
 }
 
 table.body-tabla {
-    border: 2px solid #A40808;
-    background-color: #EEE7DB;
+    border: 2px solid $color1;
+    background-color: $color3;
     width: 100%;
     text-align: left;
     border-collapse: collapse;
@@ -604,7 +615,7 @@ table.body-tabla tbody td {
 }
 
 table.body-tabla tr:nth-child(even) {
-    background: #F5C8BF;
+    background: $color4;
 }
 
 table.body-tabla tr td:last-child, 
@@ -613,7 +624,7 @@ table.body-tabla tr td:first-child {
 }
 
 table.body-tabla thead {
-    background: #A40808;
+    background: $color1;
 }
 
 table.body-tabla thead th {
@@ -621,7 +632,7 @@ table.body-tabla thead th {
     font-weight: bold;
     color: #FFFFFF;
     text-align: left;
-    border-left: 2px solid #A40808;
+    border-left: 2px solid $color1;
 }
 
 table.body-tabla thead th:first-child {
@@ -638,10 +649,41 @@ table.body-tabla tfoot .links {
 
 table.body-tabla tfoot .links a {
     display: inline-block;
-    background: #FFFFFF;
+    background: $color4;
     color: #A40808;
     padding: 2px 8px;
     border-radius: 5px;
+}
+
+.editarElement{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: absolute;
+    width: 800px;
+    height: 420px;
+    top: 20%;
+    left: 25%;
+    border: solid 1px black;
+    border-radius: 10px;
+    box-shadow: 4px 4px 15px 5px grey;
+    background-color: $color4;
+    backdrop-filter: blur(5px);
+    
+    form{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        input{
+            height: 30px;
+            resize: none;
+            padding-left: 10px;
+        }
+        textarea{
+            resize: none;
+            padding-left: 10px;
+        }
+    }
 }
 
 .disabled{
@@ -655,12 +697,13 @@ table.body-tabla tfoot .links a {
     position: absolute;
     bottom: 25px;
     right: -50px;
-    background-color: grey;
-    color: white;
+    background-color: $color5;
+    color: black;
     width: 180px;
     height: 180px;
     border-radius: 30px;
     border: 1px solid black;
+    z-index: 10;
 
     form{
         display: flex;
@@ -686,7 +729,6 @@ table.body-tabla tfoot .links a {
 }
 
 .swal-modal {
-    background-color: lightblue;
     border: 3px solid black;
 }
 
